@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+#root {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 auto;
+  text-align: center;
+}
