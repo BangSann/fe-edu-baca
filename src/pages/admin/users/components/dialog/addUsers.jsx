@@ -4,7 +4,10 @@ import { toast } from "react-toastify";
 import InputField from "../../../components/fieldInput";
 import { useDispatch, useSelector } from "react-redux";
 import TextError from "../../../../../components/textError";
-import { addUsersDataAdmin, getUsersDataAdmin } from "../../../../../lib/redux/slice/usersAdminSlice";
+import {
+  addUsersDataAdmin,
+  getUsersDataAdmin,
+} from "../../../../../lib/redux/slice/usersAdminSlice";
 
 const AddUsers = ({ onClose }) => {
   const { data: kelasData } = useSelector((state) => state.kelasAdmin);
@@ -24,7 +27,7 @@ const AddUsers = ({ onClose }) => {
       } else {
         toast.error(res.payload.response.data.message);
       }
-      dispatch(getUsersDataAdmin())
+      dispatch(getUsersDataAdmin());
     } catch (error) {
       console.log(error);
     }
@@ -46,11 +49,12 @@ const AddUsers = ({ onClose }) => {
         validationSchema={usersSchema}
         onSubmit={(data, action) => {
           handleAddUsers({ data, action });
+          // console.log(data);
           // action.resetForm();
           // onClose();
         }}
       >
-        {({ errors, values, handleChange }) => (
+        {({ errors, values, handleChange, setValues }) => (
           <Form className="space-y-3">
             <div className="grid grid-cols-2 gap-3">
               <InputField
@@ -112,7 +116,14 @@ const AddUsers = ({ onClose }) => {
                 <select
                   className="select select-md w-full"
                   value={values.sekolah}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setValues((prev) => ({
+                      ...prev,
+                      sekolah: e.target.value,
+                      kelas: "",
+                    }));
+                  }}
                   name="sekolah"
                 >
                   <option value="">pilih sekolah</option>
@@ -122,6 +133,7 @@ const AddUsers = ({ onClose }) => {
                     </option>
                   ))}
                 </select>
+
                 {errors.sekolah && <TextError>{errors.sekolah}</TextError>}
               </div>
               <div className="flex flex-col space-y-1">
@@ -137,7 +149,7 @@ const AddUsers = ({ onClose }) => {
                   {kelasData
                     ?.filter((item) => item.id == values.sekolah)[0]
                     ?.kelas.map((item_, i) => (
-                      <option value={1} key={i}>
+                      <option value={item_?.siswa[0]?.kelas || ""} key={i}>
                         {item_.kelas}
                       </option>
                     ))}

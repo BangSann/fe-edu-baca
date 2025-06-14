@@ -48,7 +48,12 @@ const EditUsers = ({ onClose, selectedData }) => {
           password: "",
           password_confirmation: "",
           sekolah: selectedData?.sekolah?.id || "",
-          kelas: 1 || "",
+          kelas:
+            kelasData
+              ?.filter((item) => item.id == selectedData?.sekolah?.id)?.[0]
+              ?.kelas?.filter(
+                (item) => item?.kelas == selectedData?.kelas?.kelas
+              )?.[0]?.siswa[0]?.kelas || "1",
         }}
         validationSchema={usersEditSchema}
         onSubmit={(data, action) => {
@@ -125,21 +130,24 @@ const EditUsers = ({ onClose, selectedData }) => {
                 {errors.sekolah && <TextError>{errors.sekolah}</TextError>}
               </div>
               <div className="flex flex-col space-y-1">
-                <label htmlFor="">Kelas</label>
+                <label htmlFor="kelas">Kelas</label>
                 <select
                   className="select select-md w-full"
                   name="kelas"
                   value={values.kelas}
-                  // onChange={handleChange}
+                  onChange={handleChange}
+                  disabled={!values.sekolah} // mencegah memilih kelas sebelum sekolah
                 >
-                  <option value="">Pilih Kelas</option>
+                  <option value="">pilih kelas</option>
                   {kelasData
-                    ?.filter(
-                      (item) => item.sekolah === parseInt(values.sekolah)
-                    )
-                    .map((item, i) => (
-                      <option value={1} key={i}>
-                        {item.kelas}
+                    ?.filter((item) => item.id == values.sekolah)[0]
+                    ?.kelas.map((item_, i) => (
+                      <option
+                        value={item_?.siswa[0]?.kelas || ""}
+                        key={i}
+                        selected={item_?.siswa[0]?.kelas == values.kelas}
+                      >
+                        {item_.kelas}
                       </option>
                     ))}
                 </select>

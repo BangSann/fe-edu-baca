@@ -52,10 +52,19 @@ const UsersAdminPage = () => {
 
   // filter state
   const [searchParams, setSearchParams] = useState("");
+  const showDataIndex = 5;
+  const [dataShowItems, setDataShowItems] = useState({
+    start: 0,
+    end: showDataIndex - 1,
+  });
 
-  // const filteredData = usersAdminData.filter((item) =>
-  //   item.username.toLowerCase().includes(searchParams.toLowerCase())
-  // );
+  const filteredData = usersAdminData?.filter((item) =>
+    item.username.toLowerCase().includes(searchParams.toLowerCase())
+  );
+  const currentDatas = filteredData?.slice(
+    dataShowItems.start,
+    dataShowItems.end + 1
+  );
   // filter state
 
   // dialog state
@@ -107,7 +116,7 @@ const UsersAdminPage = () => {
                 </thead>
                 <tbody>
                   {/* row 1 */}
-                  {usersAdminData?.map((item, i) => (
+                  {currentDatas?.map((item, i) => (
                     <tr key={i}>
                       <th>{i + 1}</th>
                       <td>{item?.name || ""}</td>
@@ -153,9 +162,9 @@ const UsersAdminPage = () => {
               </table>
             </div>
             <Pagination
-              dataLength={17}
-              dataShowCount={5}
-              setDataShowItems={(e) => console.log(e)}
+              dataLength={filteredData?.length}
+              dataShowCount={showDataIndex}
+              setDataShowItems={(e) => setDataShowItems(e)}
             />
           </section>
         </section>
