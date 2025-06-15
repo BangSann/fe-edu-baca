@@ -8,6 +8,6 @@ export const soalSchema = yup.object().shape({
   opsi_c: yup.string().required("opsi c is required"),
   opsi_d: yup.string().required("opsi d is required"),
   opsi_e: yup.string().required("opsi e is required"),
-  jawaban_benar: yup.string().required("jawaban benar is required"),
+  jawaban: yup.string().required("jawaban benar is required"),
   score: yup.string().required("score is required"),
 });

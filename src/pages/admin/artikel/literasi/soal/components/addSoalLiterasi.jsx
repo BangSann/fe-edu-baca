@@ -3,13 +3,31 @@ import { soalSchema } from "../../../../../../constant/soalSchema";
 import InputField from "../../../../components/fieldInput";
 import TextError from "../../../../../../components/textError";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { createSoalLiterasi } from "../../../../../../lib/redux/slice/soalLiterasiSlice";
 
-const AddSoalLiterasi = ({ onClose }) => {
+const AddSoalLiterasi = ({ onClose, getSoalAction }) => {
+  const { id_artikel } = useParams();
+  // redux state
+  const dispatch = useDispatch();
+  const { isLoading: loadingSoal } = useSelector((state) => state.soalLiterasi);
+  // redux state
+
   async function handleAddSoal({ values, action }) {
-    console.log(values);
-    toast.success("Berhasil menambahkan data soal");
-    onClose();
-    action.resetForm();
+    try {
+      const res = await dispatch(createSoalLiterasi(values));
+      if (createSoalLiterasi.fulfilled.match(res)) {
+        toast.success("Berhasil menambahkan data soal");
+        onClose();
+        action.resetForm();
+      } else {
+        toast.error("Gagal menambahkan data soal");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      getSoalAction();
+    }
   }
   return (
     <Formik
@@ -20,9 +38,9 @@ const AddSoalLiterasi = ({ onClose }) => {
         opsi_c: "",
         opsi_d: "",
         opsi_e: "",
-        jawaban_benar: "",
+        jawaban: "",
         score: "",
-        id_artikel: "",
+        id_artikel: id_artikel,
       }}
       validationSchema={soalSchema}
       onSubmit={(values, action) => {
@@ -92,31 +110,28 @@ const AddSoalLiterasi = ({ onClose }) => {
             />
             <div className="flex flex-col space-y-1">
               <label htmlFor="">Artikel</label>
-              <select
-                className={`select select-md w-full  ${
+              <input
+                className={`input input-md w-full  ${
                   errors.id_artikel && "outline outline-red-500"
                 }`}
                 name="id_artikel"
-                value={values.id_artikel}
+                value={id_artikel}
                 onChange={handleChange}
-              >
-                <option value="">Pilih artikel</option>
-                <option value="judul 1">judul 1</option>
-                <option value="judul 2">judul 2</option>
-              </select>
+                disabled
+              />
               {errors.id_artikel && <TextError>{errors.id_artikel}</TextError>}
             </div>
             <div className="flex flex-col space-y-1">
               <label htmlFor="">Jawaban Benar</label>
               <select
                 className={`select select-md w-full  ${
-                  errors.id_artikel && "outline outline-red-500"
+                  errors.jawaban && "outline outline-red-500"
                 }`}
-                name="jawaban_benar"
-                value={values.jawaban_benar}
+                name="jawaban"
+                value={values.jawaban}
                 onChange={handleChange}
               >
-                <option value="">Pilih artikel</option>
+                <option value="">Pilih jawaban</option>
                 {values.opsi_a && (
                   <option value={values.opsi_a}>{values.opsi_a}</option>
                 )}
@@ -133,9 +148,7 @@ const AddSoalLiterasi = ({ onClose }) => {
                   <option value={values.opsi_e}>{values.opsi_e}</option>
                 )}
               </select>
-              {errors.jawaban_benar && (
-                <TextError>{errors.jawaban_benar}</TextError>
-              )}
+              {errors.jawaban && <TextError>{errors.jawaban}</TextError>}
             </div>
             <InputField
               label={"Score"}
@@ -148,10 +161,19 @@ const AddSoalLiterasi = ({ onClose }) => {
             />
           </div>
           <div className="flex gap-2 justify-end mt-4">
-            <button className="btn btn-primary" type="submit">
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={loadingSoal}
+            >
               Tambah Soal
             </button>
-            <button className="btn btn-outline" type="button" onClick={onClose}>
+            <button
+              className="btn btn-outline"
+              type="button"
+              onClick={onClose}
+              disabled={loadingSoal}
+            >
               Tutup
             </button>
           </div>

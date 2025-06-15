@@ -6,14 +6,37 @@ import { BiPencil } from "react-icons/bi";
 import TextError from "../../../../components/textError";
 import { artikelSchema } from "../../../../constant/artikelSchema";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createArtikel } from "../../../../lib/redux/slice/artikelAdminSlice";
 
 const AddArtikelPage = () => {
   const navigate = useNavigate();
 
-  async function handleAddArtikel(values) {
-    console.log(values);
-    toast.success("Berhasil menambahkan artikel");
-    navigate("../");
+  // redux state
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.artikelAdmin);
+  // redux state
+
+  // state form
+  const [imagePreview, setImagePreview] = useState(null);
+
+  // state form
+
+  async function handleAddArtikel({ data, action }) {
+    try {
+      const res = await dispatch(createArtikel(data));
+      console.log(res);
+      if (createArtikel.fulfilled.match(res)) {
+        toast.success("Berhasil menambahkan Artikel !");
+        navigate("../")
+        action.resetForm();
+      } else {
+        toast.error("Gagal Menambahkan data artikel");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <AdminLayout>
@@ -26,11 +49,12 @@ const AddArtikelPage = () => {
           artikel_link: "",
           type: "",
           deskripsi: "",
+          image: "",
         }}
         validationSchema={artikelSchema}
-        onSubmit={(values) => handleAddArtikel(values)}
+        onSubmit={(data, action) => handleAddArtikel({ data, action })}
       >
-        {({ errors, values, handleChange }) => (
+        {({ errors, values, handleChange, setValues }) => (
           <Form>
             <div className="grid grid-cols-3 gap-3">
               <section className="col-span-2 bg-gray-200 h-[85vh]">
@@ -79,6 +103,34 @@ const AddArtikelPage = () => {
                     <TextError>{errors.artikel_link}</TextError>
                   )}
                 </div>
+
+                <div className="space-y-1 flex flex-col">
+                  <label htmlFor="">Gambar</label>
+                  {imagePreview && (
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="w-full max-h-48 object-contain border rounded"
+                    />
+                  )}
+                  <input
+                    name="image"
+                    type="file"
+                    className="file-input w-full"
+                    onChange={(event) => {
+                      const file = event.currentTarget.files[0];
+                      if (file) {
+                        setImagePreview(URL.createObjectURL(file));
+                      }
+
+                      setValues((prev) => ({
+                        ...prev,
+                        image: event.currentTarget.files[0],
+                      }));
+                    }}
+                  />
+                  {errors.image && <TextError>{errors.image}</TextError>}
+                </div>
                 <InputField
                   error={errors.judul}
                   label={"Judul"}
@@ -119,13 +171,18 @@ const AddArtikelPage = () => {
                   )}
                 </div>
                 <div className="space-x-2 pt-3 flex justify-end">
-                  <button className="btn  btn-primary btn-lg" type="submit">
+                  <button
+                    className="btn  btn-primary btn-lg"
+                    type="submit"
+                    disabled={isLoading}
+                  >
                     Tambah Artikel
                   </button>
                   <button
                     className="btn btn-outline btn-lg"
                     type="button"
                     onClick={() => navigate("../")}
+                    disabled={isLoading}
                   >
                     Kembali
                   </button>

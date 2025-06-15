@@ -3,7 +3,13 @@ import DeleteSoalLiterasi from "./deleteSoalLiterasi";
 import EditSoalLiterasi from "./editSoalLiterasi";
 import ViewSoalLiterasi from "./viewSoalLiterasi";
 
-const DialogSoalLiterasi = ({ isOpen, selectedData, onClose, action }) => {
+const DialogSoalLiterasi = ({
+  isOpen,
+  selectedData,
+  onClose,
+  action,
+  getSoalAction,
+}) => {
   return (
     <dialog
       id="my_modal_soal_literasi"
@@ -42,11 +48,15 @@ const DialogSoalLiterasi = ({ isOpen, selectedData, onClose, action }) => {
           )}
         </div>
         {action == "add" ? (
-          <AddSoalLiterasi onClose={onClose} />
+          <AddSoalLiterasi onClose={onClose} getSoalAction={getSoalAction} />
         ) : action == "edit" ? (
-          <EditSoalLiterasi onClose={onClose} selectedData={selectedData} />
+          <EditSoalLiterasi
+            onClose={onClose}
+            selectedData={selectedData}
+            getSoalAction={getSoalAction}
+          />
         ) : action == "delete" ? (
-          <DeleteSoalLiterasi onClose={onClose} selectedData={selectedData} />
+          <DeleteSoalLiterasi onClose={onClose} selectedData={selectedData} getSoalAction={getSoalAction}/>
         ) : action == "show" ? (
           <ViewSoalLiterasi onClose={onClose} selectedData={selectedData} />
         ) : (

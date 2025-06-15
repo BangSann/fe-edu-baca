@@ -3,26 +3,49 @@ import { soalSchema } from "../../../../../../constant/soalSchema";
 import InputField from "../../../../components/fieldInput";
 import TextError from "../../../../../../components/textError";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { updateSoalLiterasi } from "../../../../../../lib/redux/slice/soalLiterasiSlice";
 
-const EditSoalLiterasi = ({ onClose, selectedData }) => {
+const EditSoalLiterasi = ({ onClose, selectedData , getSoalAction}) => {
+  const { id_artikel } = useParams();
+  // redux state
+  const dispatch = useDispatch();
+  const { isLoading: loadingSoal } = useSelector((state) => state.soalLiterasi);
+  // redux state
+
   async function handleEditSoal(values) {
-    console.log(values);
-    toast.success("Berhasil mengubah data soal");
-    onClose();
+    try {
+      const res = await dispatch(updateSoalLiterasi(values));
+      console.log(res);
+      if (updateSoalLiterasi.fulfilled.match(res)) {
+        toast.success("Berhasil mengubah data soal");
+        onClose();
+      } else {
+        toast.error("Gagal menambahkan data soal");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      getSoalAction();
+    }
   }
+
   return (
     <Formik
       initialValues={{
-        soal: "default soal",
-        opsi_a: "default opsi",
-        opsi_b: "default opsi",
-        opsi_c: "default opsi",
-        opsi_d: "default opsi",
-        opsi_e: "default opsi",
-        jawaban_benar: "default opsi",
-        score: "10",
-        id_artikel: "judul 1",
+        id: selectedData?.id,
+        soal: selectedData?.soal,
+        opsi_a: selectedData?.opsi_a,
+        opsi_b: selectedData?.opsi_b,
+        opsi_c: selectedData?.opsi_c,
+        opsi_d: selectedData?.opsi_d,
+        opsi_e: selectedData?.opsi_e,
+        jawaban: selectedData?.jawaban,
+        score: selectedData?.score,
+        id_artikel: id_artikel,
       }}
+      enableReinitialize
       validationSchema={soalSchema}
       onSubmit={(values) => handleEditSoal(values)}
     >
@@ -89,31 +112,28 @@ const EditSoalLiterasi = ({ onClose, selectedData }) => {
             />
             <div className="flex flex-col space-y-1">
               <label htmlFor="">Artikel</label>
-              <select
-                className={`select select-md w-full  ${
+              <input
+                className={`input input-md w-full  ${
                   errors.id_artikel && "outline outline-red-500"
                 }`}
                 name="id_artikel"
-                value={values.id_artikel}
+                value={id_artikel}
                 onChange={handleChange}
-              >
-                <option value="">Pilih artikel</option>
-                <option value="judul 1">judul 1</option>
-                <option value="judul 2">judul 2</option>
-              </select>
+                disabled
+              />
               {errors.id_artikel && <TextError>{errors.id_artikel}</TextError>}
             </div>
             <div className="flex flex-col space-y-1">
               <label htmlFor="">Jawaban Benar</label>
               <select
                 className={`select select-md w-full  ${
-                  errors.id_artikel && "outline outline-red-500"
+                  errors.jawaban && "outline outline-red-500"
                 }`}
-                name="jawaban_benar"
-                value={values.jawaban_benar}
+                name="jawaban"
+                value={values.jawaban}
                 onChange={handleChange}
               >
-                <option value="">Pilih artikel</option>
+                <option value="">Pilih jawaban</option>
                 {values.opsi_a && (
                   <option value={values.opsi_a}>{values.opsi_a}</option>
                 )}
@@ -130,9 +150,7 @@ const EditSoalLiterasi = ({ onClose, selectedData }) => {
                   <option value={values.opsi_e}>{values.opsi_e}</option>
                 )}
               </select>
-              {errors.jawaban_benar && (
-                <TextError>{errors.jawaban_benar}</TextError>
-              )}
+              {errors.jawaban && <TextError>{errors.jawaban}</TextError>}
             </div>
             <InputField
               label={"Score"}
@@ -145,10 +163,19 @@ const EditSoalLiterasi = ({ onClose, selectedData }) => {
             />
           </div>
           <div className="flex gap-2 justify-end mt-4">
-            <button className="btn btn-primary" type="submit">
-              Tambah Soal
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={loadingSoal}
+            >
+              Edit Soal
             </button>
-            <button className="btn btn-outline" type="button" onClick={onClose}>
+            <button
+              className="btn btn-outline"
+              type="button"
+              onClick={onClose}
+              disabled={loadingSoal}
+            >
               Tutup
             </button>
           </div>
