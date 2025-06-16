@@ -101,7 +101,7 @@ const ArtikelAdminPage = () => {
                         <div className="avatar">
                           <div className="mask rounded-lg h-24 w-24">
                             <img
-                              src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                              src={`${import.meta.env.VITE_API_IMAGE_DEV}${item?.image}`}
                               alt="Avatar Tailwind CSS Component"
                             />
                           </div>

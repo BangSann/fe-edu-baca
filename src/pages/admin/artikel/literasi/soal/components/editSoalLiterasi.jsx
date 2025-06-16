@@ -17,7 +17,6 @@ const EditSoalLiterasi = ({ onClose, selectedData , getSoalAction}) => {
   async function handleEditSoal(values) {
     try {
       const res = await dispatch(updateSoalLiterasi(values));
-      console.log(res);
       if (updateSoalLiterasi.fulfilled.match(res)) {
         toast.success("Berhasil mengubah data soal");
         onClose();

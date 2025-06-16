@@ -29,8 +29,10 @@ function App() {
           <Route path="/EduAdmin">
             <Route index element={<AdminDashboardPage />} />
 
-            <Route path="kelas" element={<KelasAdminPage />} />
-            <Route path="sekolah" element={<SekolahAdminPage />} />
+            <Route path="sekolah">
+              <Route index element={<SekolahAdminPage />} />
+              <Route path=":id_sekolah/kelas" element={<KelasAdminPage />} />
+            </Route>
 
             <Route path="users" element={<UsersAdminPage />} />
 

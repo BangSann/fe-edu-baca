@@ -3,7 +3,6 @@ import { deleteSoalLiterasi } from "../../../../../../lib/redux/slice/soalLitera
 import { useDispatch, useSelector } from "react-redux";
 
 const DeleteSoalLiterasi = ({ onClose, selectedData, getSoalAction }) => {
-  console.log(selectedData)
   // redux state
   const dispatch = useDispatch();
   const { isLoading: loadingSoal } = useSelector((state) => state.soalLiterasi);

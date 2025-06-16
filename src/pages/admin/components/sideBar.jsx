@@ -1,9 +1,10 @@
 import { BsFilePerson } from "react-icons/bs";
 import { FiBook, FiHome } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "../../../lib/redux/slice/authSlice";
 import { deleteCookie } from "cookies-next";
+import { FaSchool } from "react-icons/fa";
 
 const navItems = [
   {
@@ -15,6 +16,11 @@ const navItems = [
     title: "Users",
     icon: <BsFilePerson size={24} />,
     path: "users",
+  },
+  {
+    title: "Sekolah",
+    icon: <FaSchool size={24} />,
+    path: "sekolah",
   },
   {
     title: "Artikel",

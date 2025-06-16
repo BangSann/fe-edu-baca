@@ -5,6 +5,7 @@ import TextError from "../../../../../../components/textError";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { createSoalLiterasi } from "../../../../../../lib/redux/slice/soalLiterasiSlice";
+import { useParams } from "react-router-dom";
 
 const AddSoalLiterasi = ({ onClose, getSoalAction }) => {
   const { id_artikel } = useParams();

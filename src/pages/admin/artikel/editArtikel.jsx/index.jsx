@@ -118,7 +118,7 @@ const EditArtikelPage = () => {
                       }}
                     >
                       <BiPencil size={24} />
-                      Tambah Link Artikel
+                      Ubah Link Artikel
                     </button>
                     {errors.artikel_link && (
                       <TextError>{errors.artikel_link}</TextError>

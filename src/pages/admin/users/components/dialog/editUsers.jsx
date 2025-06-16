@@ -15,7 +15,6 @@ import {
 const EditUsers = ({ onClose, selectedData }) => {
   const { data: kelasData } = useSelector((state) => state.kelasAdmin);
   const { data: sekolahData } = useSelector((state) => state.sekolahAdmin);
-
   const { isLoading } = useSelector((state) => state.usersAdmin);
 
   const dispatch = useDispatch();
@@ -46,16 +45,13 @@ const EditUsers = ({ onClose, selectedData }) => {
           username: selectedData?.username || "",
           email: selectedData?.email || "",
           password: "",
+          role : selectedData?.role,
           password_confirmation: "",
           sekolah: selectedData?.sekolah?.id || "",
-          kelas:
-            kelasData
-              ?.filter((item) => item.id == selectedData?.sekolah?.id)?.[0]
-              ?.kelas?.filter(
-                (item) => item?.kelas == selectedData?.kelas?.kelas
-              )?.[0]?.siswa[0]?.kelas || "1",
+          kelas: selectedData?.kelas?.id,
         }}
         validationSchema={usersEditSchema}
+        enableReinitialize
         onSubmit={(data, action) => {
           handleEditUsers({ data, action });
         }}
@@ -108,6 +104,15 @@ const EditUsers = ({ onClose, selectedData }) => {
                 onchange={handleChange}
                 values={values.password_confirmation}
               />
+              <InputField
+                label={"Role"}
+                name={"role"}
+                placeholder={"role"}
+                type={"text"}
+                error={errors.role}
+                onchange={handleChange}
+                values={values.role}
+              />
               <div className="flex flex-col space-y-1">
                 <label htmlFor="">Sekolah</label>
                 <select
@@ -143,9 +148,9 @@ const EditUsers = ({ onClose, selectedData }) => {
                     ?.filter((item) => item.id == values.sekolah)[0]
                     ?.kelas.map((item_, i) => (
                       <option
-                        value={item_?.siswa[0]?.kelas || ""}
+                        value={item_?.id || ""}
                         key={i}
-                        selected={item_?.siswa[0]?.kelas == values.kelas}
+                        selected={item_?.id == values.kelas}
                       >
                         {item_.kelas}
                       </option>

@@ -25,7 +25,6 @@ export const usersSchema = yup.object().shape({
     .required("please confirm your password"),
 });
 
-
 export const usersEditSchema = yup.object().shape({
   name: yup
     .string()
@@ -41,10 +40,7 @@ export const usersEditSchema = yup.object().shape({
     .string()
     .email("Invalid email format")
     .required("email is required"),
-  password: yup
-    .string()
-    .min(8, "password is too short")
-    .notRequired(),
+  password: yup.string().min(8, "password is too short").notRequired(),
   password_confirmation: yup
     .string()
     .oneOf([yup.ref("password"), ""], "Password confirmation does not match")
@@ -53,6 +49,7 @@ export const usersEditSchema = yup.object().shape({
       then: (schema) => schema.required("Password confirmation is required"),
       otherwise: (schema) => schema.notRequired(),
     }),
+  role: yup.string().required("sekolah field cannot be empty"),
   kelas: yup.string().required("kelas field cannot be empty"),
   sekolah: yup.string().required("sekolah field cannot be empty"),
 });

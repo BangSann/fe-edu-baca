@@ -149,7 +149,7 @@ const AddUsers = ({ onClose }) => {
                   {kelasData
                     ?.filter((item) => item.id == values.sekolah)[0]
                     ?.kelas.map((item_, i) => (
-                      <option value={item_?.siswa[0]?.kelas || ""} key={i}>
+                      <option value={item_?.id || ""} key={i}>
                         {item_.kelas}
                       </option>
                     ))}
