@@ -60,6 +60,24 @@ export const uploadNilaiLiterasi = createAsyncThunk(
     }
   }
 );
+export const getNilaiLiterasiByIdUsersIdArtikel = createAsyncThunk(
+  "getNilaiLiterasiByIdUsersIdArtikel",
+  async ({ id_user, id_artikel }, { rejectWithValue }) => {
+    try {
+      const res = await eduApi.get(
+        `nilai?id_user=${id_user}&&id_artikel=${id_artikel}`
+      );
+
+      return res.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error);
+      }
+
+      return rejectWithValue("unknown error");
+    }
+  }
+);
 
 const nilaiLiterasiSlice = createSlice({
   name: "nilaiLiterasiSlice",
@@ -109,7 +127,24 @@ const nilaiLiterasiSlice = createSlice({
         state.isLoading = false;
         // state.data = action.payload.data;
         state.error = "";
-      });
+      })
+      .addCase(getNilaiLiterasiByIdUsersIdArtikel.pending, (state, action) => {
+        state.isLoading = true;
+        state.error = "";
+      })
+      .addCase(getNilaiLiterasiByIdUsersIdArtikel.rejected, (state, action) => {
+        state.isLoading = false;
+        // state.error = action.payload.error;
+        state.data = undefined
+      })
+      .addCase(
+        getNilaiLiterasiByIdUsersIdArtikel.fulfilled,
+        (state, action) => {
+          state.isLoading = false;
+          state.data = action.payload.data;
+          state.error = "";
+        }
+      );
   },
 });
 

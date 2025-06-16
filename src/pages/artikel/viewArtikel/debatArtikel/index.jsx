@@ -30,7 +30,7 @@ const ArtikelDebat = ({ dataArtikel }) => {
         {!showSoal && (
           <div className="w-full h-[80vh] border rounded mt-4 overflow-hidden">
             <iframe
-              src={dataArtikel.artikel_link}
+              src={dataArtikel?.artikel_link}
               title="Artikel"
               className="w-full h-full"
               frameBorder="0"

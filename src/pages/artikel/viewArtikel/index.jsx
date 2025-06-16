@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import ArtikelQuizLiterasi from "./artikelQuizLiterasi";
 import { getCookies } from "cookies-next";
 import ArtikelDebat from "./debatArtikel";
+import { getNilaiLiterasiByIdUsersIdArtikel } from "../../../lib/redux/slice/nilaiLiterasiSlice";
 
 const ViewArtikelUsersPage = () => {
   const { id_artikel } = useParams();
@@ -14,6 +15,10 @@ const ViewArtikelUsersPage = () => {
   const { data: dataArtikel, isLoading } = useSelector(
     (state) => state.artikelAdmin
   );
+  const { isLoading: loadingNilai, data: dataNilai } = useSelector(
+    (state) => state.nilaiLiterasi
+  );
+  const { data: dataProfile } = useSelector((state) => state.auth);
 
   useEffect(() => {
     async function handleGetArtikelData() {
@@ -31,9 +36,18 @@ const ViewArtikelUsersPage = () => {
   }, [id_artikel]);
   // data state
 
+  useEffect(() => {
+    dispatch(
+      getNilaiLiterasiByIdUsersIdArtikel({
+        id_user: dataProfile?.id,
+        id_artikel,
+      })
+    );
+  }, []);
+
   return (
     <MainLayout>
-      {isLoading ? (
+      {isLoading || loadingNilai ? (
         <section className=" flex justify-center">
           <div className="skeleton h-32 w-full container mt-3"></div>
         </section>

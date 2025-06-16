@@ -1,33 +1,27 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadNilaiLiterasi } from "../../../../lib/redux/slice/nilaiLiterasiSlice";
+import {
+  getNilaiLiterasiByIdUsersIdArtikel,
+  uploadNilaiLiterasi,
+} from "../../../../lib/redux/slice/nilaiLiterasiSlice";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteCookie, setCookie } from "cookies-next";
 
 const ArtikelQuizLiterasi = ({ dataArtikel }) => {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.nilaiLiterasi);
+  const { isLoading, data: dataNilai } = useSelector(
+    (state) => state.nilaiLiterasi
+  );
   const { data: dataProfile } = useSelector((state) => state.auth);
   const { id_artikel } = useParams();
   const navigate = useNavigate();
 
-  const [timeLeft, setTimeLeft] = useState(15 * 60); // 15 menit baca
+  const [timeLeft, setTimeLeft] = useState(15 * 60);
   const [readingDone, setReadingDone] = useState(false);
   const [startQuiz, setStartQuiz] = useState(false);
   const [currentSoal, setCurrentSoal] = useState(0);
   const [answers, setAnswers] = useState({});
-  useEffect(() => {
-    let timer;
-    if (timeLeft > 0 && !readingDone) {
-      timer = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-      }, 1000);
-    } else if (timeLeft === 0 && !readingDone) {
-      setReadingDone(true);
-    }
-    return () => clearInterval(timer);
-  }, [timeLeft, readingDone]);
 
   const formatTime = (sec) => {
     const m = String(Math.floor(sec / 60)).padStart(2, "0");
@@ -35,22 +29,17 @@ const ArtikelQuizLiterasi = ({ dataArtikel }) => {
     return `${m}:${s}`;
   };
 
-  const handleOptionChange = (soalId, selected) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [soalId]: selected,
-    }));
-  };
-
-  //   set current time
+  // Simpan waktu baca ke cookie, hanya jika kuis belum selesai
   useEffect(() => {
+    if (dataNilai) return; // Jangan set timer jika sudah ada nilai
+
     let timer;
     if (timeLeft > 0 && !readingDone) {
       timer = setInterval(() => {
         setTimeLeft((prev) => {
           const newTime = prev - 1;
 
-          // Simpan ke cookies setiap update waktu
+          // Simpan ke cookies
           setCookie("reading_timer", newTime.toString(), {
             maxAge: 60 * 60 * 24,
           });
@@ -64,85 +53,105 @@ const ArtikelQuizLiterasi = ({ dataArtikel }) => {
     } else if (timeLeft === 0 && !readingDone) {
       setReadingDone(true);
     }
+
     return () => clearInterval(timer);
-  }, [timeLeft, readingDone]);
-  //   set current time
+  }, [timeLeft, readingDone, dataNilai, id_artikel]);
 
-  const nextQuestion = () => {
-    if (currentSoal < dataArtikel.soal.length - 1) {
-      setCurrentSoal(currentSoal + 1);
-    } else {
-      handleUploadNilaiQuiz({
-        nilai: dataArtikel.soal.reduce((total, item) => {
-          const jawabanUser = answers[item.id];
-          return total + (jawabanUser === item.jawaban ? item.score : 0);
-        }, 0),
-        id_user: dataProfile?.id,
-        id_artikel: id_artikel,
-      });
-    }
+  const handleOptionChange = (soalId, selected) => {
+    setAnswers((prev) => ({ ...prev, [soalId]: selected }));
   };
 
-  const prevQuestion = () => {
-    if (currentSoal >= 1) {
-      setCurrentSoal(currentSoal - 1);
-    }
-  };
+  const handleUploadNilaiQuiz = async () => {
+    const nilai = dataArtikel.soal.reduce((total, item) => {
+      return total + (answers[item.id] === item.jawaban ? item.score : 0);
+    }, 0);
 
-  const current = dataArtikel.soal[currentSoal];
-
-  async function handleUploadNilaiQuiz(data) {
     try {
-      const res = await dispatch(uploadNilaiLiterasi(data));
+      const res = await dispatch(
+        uploadNilaiLiterasi({ nilai, id_user: dataProfile?.id, id_artikel })
+      );
+
       if (uploadNilaiLiterasi.fulfilled.match(res)) {
-        toast.success("nilai telah direkap");
+        toast.success("Nilai telah direkap");
         deleteCookie("reading_timer");
         deleteCookie("reading_artikel_id");
         navigate("/");
       } else {
-        toast.error("nilai gagal diupload");
+        toast.error("Nilai gagal diupload");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
+  };
+
+  const nextQuestion = () => {
+    if (currentSoal < dataArtikel.soal.length - 1) {
+      setCurrentSoal((prev) => prev + 1);
+    } else {
+      handleUploadNilaiQuiz();
+    }
+  };
+
+  const prevQuestion = () => {
+    if (currentSoal > 0) {
+      setCurrentSoal((prev) => prev - 1);
+    }
+  };
+
+  if (dataNilai) {
+    return (
+      <section className="flex justify-center items-center h-[50vh]">
+        <div className="card bg-green-100 border border-green-300 shadow-md p-6 text-center">
+          <h2 className="text-xl font-semibold text-green-800 mb-2">
+            Quiz Sudah Selesai
+          </h2>
+          <p className="text-gray-700">
+            Anda telah menyelesaikan quiz pada artikel ini.
+          </p>
+          <button
+            className="btn btn-primary btn-sm mt-4"
+            onClick={() => navigate("/artikel")}
+          >
+            Kembali Ke Daftar Artikel
+          </button>
+        </div>
+      </section>
+    );
   }
+
+  const current = dataArtikel.soal[currentSoal];
 
   return (
     <section className="p-4 w-full mx-auto space-y-6 flex flex-col items-center justify-center">
-      {/* Informasi Artikel */}
-      <div
-        className={`bg-base-100 shadow-md container ${
-          startQuiz ? "hidden" : ""
-        }`}
-      >
-        <div className="p-4">
-          <div className="mt-2 text-right">
-            <span className="badge badge-info text-white">
-              Waktu Baca: {formatTime(timeLeft)}
-            </span>
-          </div>
-          <div className="w-full h-[70vh] border rounded mt-4 overflow-hidden">
-            <iframe
-              src={dataArtikel.artikel_link}
-              title="Artikel"
-              className="w-full h-full"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </div>
-          <div className="mt-4 flex justify-end">
-            <button
-              className="btn btn-primary"
-              //   disabled={!readingDone}
-              onClick={() => setStartQuiz(true)}
-            >
-              {"Mulai Quiz"}
-            </button>
+      {!startQuiz && (
+        <div className="bg-base-100 shadow-md container">
+          <div className="p-4">
+            <div className="mt-2 text-right">
+              <span className="badge badge-info text-white">
+                Waktu Baca: {formatTime(timeLeft)}
+              </span>
+            </div>
+            <div className="w-full h-[70vh] border rounded mt-4 overflow-hidden">
+              <iframe
+                src={dataArtikel.artikel_link}
+                title="Artikel"
+                className="w-full h-full"
+                frameBorder="0"
+                allowFullScreen
+              ></iframe>
+            </div>
+            <div className="mt-4 flex justify-end">
+              <button
+                className="btn btn-primary"
+                onClick={() => setStartQuiz(true)}
+              >
+                Mulai Quiz
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* Quiz */}
       {startQuiz && (
         <div className="card bg-base-100 shadow-md w-full container">
           <div className="card-body space-y-4">
@@ -158,7 +167,8 @@ const ArtikelQuizLiterasi = ({ dataArtikel }) => {
             <h4 className="font-semibold text-start text-2xl">
               {current.soal}
             </h4>
-            <div className="form-control space-y-2 flex flex-col">
+
+            <div className="flex flex-col space-y-2">
               {["a", "b", "c", "d", "e"].map((opt) => (
                 <label key={opt} className="label cursor-pointer">
                   <input
@@ -184,7 +194,7 @@ const ArtikelQuizLiterasi = ({ dataArtikel }) => {
                 onClick={prevQuestion}
                 disabled={currentSoal < 1 || isLoading}
               >
-                {"kembali"}
+                Kembali
               </button>
               <button
                 className={`btn text-white ${
