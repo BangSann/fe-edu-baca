@@ -21,7 +21,7 @@ const navList = [
 
 const Navbar = () => {
   return (
-    <div className="flex justify-center bg-neutral text-neutral-content sticky top-0">
+    <div className="flex justify-center bg-green-400 text-neutral-content sticky top-0">
       <section className="container navbar shadow-sm flex justify-between">
         <div className="">
           <a className="font-bold text-xl">Edu Baca</a>

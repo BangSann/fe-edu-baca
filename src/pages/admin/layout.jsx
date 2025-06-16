@@ -43,7 +43,7 @@ const AdminLayout = ({ children }) => {
   if (isLoading) {
     return <section></section>;
   } else if (dataProfile && !isLoading) {
-    if (dataProfile[0]?.role?.toLowerCase() !== "admin") {
+    if (dataProfile?.role?.toLowerCase() !== "admin") {
       return <DefaultPage />;
     }
   }

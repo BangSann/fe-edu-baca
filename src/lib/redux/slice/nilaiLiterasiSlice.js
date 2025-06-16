@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import eduApi from "../../axios";
+import { AxiosError } from "axios";
 
 export const getnilaiLiterasiByIdArtikel = createAsyncThunk(
   "getnilaiLiterasiByIdArtikel",
@@ -23,6 +24,31 @@ export const deleteNilaiLiterasi = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const res = await eduApi.delete(`nilai/${id}`);
+
+      return res.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error);
+      }
+
+      return rejectWithValue("unknown error");
+    }
+  }
+);
+export const uploadNilaiLiterasi = createAsyncThunk(
+  "uploadNilaiLiterasi",
+  async (data, { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+      formData.append("nilai", data.nilai);
+      formData.append("id_user", data.id_user);
+      formData.append("id_artikel", data.id_artikel);
+
+      const res = await eduApi.post(`nilai`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       return res.data;
     } catch (error) {
@@ -67,6 +93,19 @@ const nilaiLiterasiSlice = createSlice({
         state.error = action.payload.error;
       })
       .addCase(deleteNilaiLiterasi.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // state.data = action.payload.data;
+        state.error = "";
+      })
+      .addCase(uploadNilaiLiterasi.pending, (state, action) => {
+        state.isLoading = true;
+        state.error = "";
+      })
+      .addCase(uploadNilaiLiterasi.rejected, (state, action) => {
+        state.isLoading = false;
+        // state.error = action.payload.error;
+      })
+      .addCase(uploadNilaiLiterasi.fulfilled, (state, action) => {
         state.isLoading = false;
         // state.data = action.payload.data;
         state.error = "";

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainLayout from "./layout";
 
 const actionList = [
@@ -8,7 +8,7 @@ const actionList = [
   },
   {
     title: "Latihan  Interaktif",
-    route: "/",
+    route: "/artikel",
   },
   {
     title: "Bank Bacaan",
@@ -20,7 +20,7 @@ const actionList = [
   },
   {
     title: "Profil Siswa",
-    route: "/",
+    route: "/profile",
   },
   {
     title: "Kontak",
@@ -29,6 +29,7 @@ const actionList = [
 ];
 
 const MainPage = () => {
+  const navigate = useNavigate();
   return (
     <MainLayout>
       <section className="flex flex-col text-start items-center justify-center bg-green-100">
@@ -46,7 +47,10 @@ const MainPage = () => {
                 berbagai teks menarik dan latihan interaktif
               </p>
             </div>
-            <button className="btn bg-green-500 shadow-none outline-none border-none w-40 font-bold text-white">
+            <button
+              className="btn bg-green-500 shadow-none outline-none border-none w-40 font-bold text-white"
+              onClick={() => navigate("artikel")}
+            >
               Mulai Belajar
             </button>
           </section>

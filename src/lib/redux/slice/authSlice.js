@@ -23,7 +23,7 @@ export const signOut = createAsyncThunk(
   "signOut",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await eduApi.get("auth/sign-out");
+      const res = await eduApi.delete("auth/sign-out");
 
       return res.data;
     } catch (error) {

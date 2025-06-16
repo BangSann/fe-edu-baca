@@ -92,7 +92,7 @@ const ArtikelAdminPage = () => {
               </thead>
               <tbody>
                 {/* row 1 */}
-                {currentDatas?.map((item, i) => (
+                {dataArtikel?.map((item, i) => (
                   <tr key={i}>
                     <th>{i + 1}</th>
 

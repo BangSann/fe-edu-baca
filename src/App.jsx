@@ -15,6 +15,9 @@ import NilaiLiterasiPage from "./pages/admin/artikel/literasi/nilai/index.jsx";
 import LiterasiPage from "./pages/admin/artikel/literasi/index.jsx";
 import KelasAdminPage from "./pages/admin/kelas/index.jsx";
 import SekolahAdminPage from "./pages/admin/sekolah/index.jsx";
+import ArtikelPage from "./pages/artikel/index.jsx";
+import ProfilePage from "./pages/profile/index.jsx";
+import ViewArtikelUsersPage from "./pages/artikel/viewArtikel/index.jsx";
 
 function App() {
   return (
@@ -24,6 +27,12 @@ function App() {
           <Route path="/">
             <Route index element={<MainPage />} />
             <Route path="login" element={<LoginPage />} />
+
+            <Route path="artikel">
+              <Route index element={<ArtikelPage />} />
+              <Route path=":id_artikel" element={<ViewArtikelUsersPage />} />
+            </Route>
+            <Route path="profile" element={<ProfilePage />} />
           </Route>
 
           <Route path="/EduAdmin">
