@@ -6,6 +6,7 @@ import kelasAdminSlice from "./slice/kelasAdminSlice";
 import artikelAdminSlice from "./slice/artikelAdminSlice";
 import soalLiterasiSlice from "./slice/soalLiterasiSlice";
 import nilaiLiterasiSlice from "./slice/nilaiLiterasiSlice";
+import materiSlice from "./slice/materiSlice";
 
 export default configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export default configureStore({
     artikelAdmin: artikelAdminSlice,
     soalLiterasi: soalLiterasiSlice,
     nilaiLiterasi: nilaiLiterasiSlice,
+    materi: materiSlice,
   },
 });

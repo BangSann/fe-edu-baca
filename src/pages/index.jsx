@@ -4,15 +4,15 @@ import MainLayout from "./layout";
 const actionList = [
   {
     title: "Materi",
-    route: "/",
+    route: "/materi",
   },
   {
     title: "Latihan  Interaktif",
-    route: "/artikel",
+    route: "/artikel?type=quiz",
   },
   {
     title: "Bank Bacaan",
-    route: "/",
+    route: "/artikel",
   },
   {
     title: "Untuk Guru",

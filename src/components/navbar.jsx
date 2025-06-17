@@ -7,15 +7,19 @@ const navList = [
   },
   {
     title: "Bacaan",
-    route: "/bacaan",
+    route: "/artikel",
   },
   {
     title: "Project Literasi",
-    route: "/project-literasi",
+    route: "/artikel?type=quiz",
   },
   {
     title: "Contact",
     route: "/contact",
+  },
+  {
+    title: "Profile",
+    route: "/profile",
   },
 ];
 

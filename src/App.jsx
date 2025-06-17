@@ -18,6 +18,8 @@ import SekolahAdminPage from "./pages/admin/sekolah/index.jsx";
 import ArtikelPage from "./pages/artikel/index.jsx";
 import ProfilePage from "./pages/profile/index.jsx";
 import ViewArtikelUsersPage from "./pages/artikel/viewArtikel/index.jsx";
+import MateriUsersPage from "./pages/materi/index.jsx";
+import ViewUsersMateri from "./pages/materi/viewMateri/index.jsx";
 
 function App() {
   return (
@@ -33,6 +35,10 @@ function App() {
               <Route path=":id_artikel" element={<ViewArtikelUsersPage />} />
             </Route>
             <Route path="profile" element={<ProfilePage />} />
+            <Route path="materi">
+              <Route index element={<MateriUsersPage />} />
+              <Route path=":id_materi" element={<ViewUsersMateri />} />
+            </Route>
           </Route>
 
           <Route path="/EduAdmin">
