@@ -44,10 +44,9 @@ const PerangkatMateriPage = () => {
   );
   // Filter & Pagination
 
-  console.log(perangkatMateriData);
   return (
     <MainLayout>
-      <section className="container mx-auto mt-4 p-4">
+      <section className="container mx-auto mt-4 p-4 h-[calc(100vh-65px)]">
         <div className="mb-4 flex items-center">
           <input
             type="text"
@@ -90,12 +89,9 @@ const PerangkatMateriPage = () => {
                   className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                 >
                   <img
-                    src={
-                      item.cover ||
-                      "https://via.placeholder.com/400x200?text=No+Image"
-                    }
+                    src={import.meta.env.VITE_API_IMAGE_MODUL_DEV + item?.cover}
                     alt={item.judul}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-48 object-contain"
                   />
                   <div className="p-4">
                     <h3 className="text-lg font-semibold mb-2">{item.judul}</h3>

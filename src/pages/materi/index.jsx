@@ -46,7 +46,7 @@ const MateriUsersPage = () => {
 
   return (
     <MainLayout>
-      <section className="container mx-auto px-4 py-6">
+      <section className="container mx-auto px-4 py-6 h-[calc(100vh-65px)]">
         {/* Search Input */}
         <div className="mb-4 flex items-center">
           <input
@@ -83,7 +83,7 @@ const MateriUsersPage = () => {
         ) : (
           <>
             {/* Data Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 cursor-pointer">
               {currentDatas?.map((item, index) => (
                 <div
                   key={index}
@@ -91,11 +91,10 @@ const MateriUsersPage = () => {
                 >
                   <img
                     src={
-                      item.cover ||
-                      "https://via.placeholder.com/400x200?text=No+Image"
+                      import.meta.env.VITE_API_IMAGE_MATERI_DEV+item?.cover
                     }
                     alt={item.judul}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-48 object-contain"
                   />
                   <div className="p-4">
                     <h3 className="text-lg font-semibold mb-2">{item.judul}</h3>

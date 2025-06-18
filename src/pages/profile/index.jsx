@@ -24,7 +24,7 @@ const ProfilePage = () => {
   }
   return (
     <MainLayout>
-      <section>
+      <section className="h-[calc(100vh-65px)]">
         <h1>{dataProfile?.name}</h1>
         <button className="btn btn-error" onClick={() => handleSignOut()}>
           LogOut

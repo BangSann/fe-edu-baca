@@ -1,21 +1,22 @@
-import { Link, useParams } from "react-router-dom";
-import MainLayout from "../../layout";
 import { useDispatch, useSelector } from "react-redux";
-import { getMateriById } from "../../../lib/redux/slice/materiSlice";
+import { Link, useParams } from "react-router-dom";
+import { getPerangkatMateriById } from "../../../lib/redux/slice/perangkatMateriSlice";
 import { useEffect, useState } from "react";
+import MainLayout from "../../layout";
 import { GrFormPrevious } from "react-icons/gr";
 
-const ViewUsersMateri = () => {
-  const { id_materi } = useParams();
-
+const ViewPerangkatMateriUsersPage = () => {
+  const { id_modul } = useParams();
   const dispatch = useDispatch();
-  const { isLoading, data: materiData } = useSelector((state) => state.materi);
+  const { isLoading, data: perangkatMateri } = useSelector(
+    (state) => state.perangkatMateri
+  );
 
   useEffect(() => {
     async function handleGeMateri() {
       try {
-        const res = await dispatch(getMateriById(id_materi));
-        if (!getMateriById.fulfilled.match(res)) {
+        const res = await dispatch(getPerangkatMateriById(id_modul));
+        if (!getPerangkatMateriById.fulfilled.match(res)) {
           console.error("Gagal fetch:", res);
         }
       } catch (error) {
@@ -24,7 +25,7 @@ const ViewUsersMateri = () => {
     }
 
     handleGeMateri();
-  }, [id_materi]);
+  }, [id_modul]);
 
   const [pdfLoaded, setPdfLoaded] = useState(false);
 
@@ -48,7 +49,7 @@ const ViewUsersMateri = () => {
                 <GrFormPrevious />
               </Link>
               <h1 className="input input-neutral rounded-s-none w-full bg-gray-300">
-                {materiData[0]?.judul || "Judul Tidak Tersedia"}
+                {perangkatMateri[0]?.judul || "Judul Tidak Tersedia"}
               </h1>
             </section>
             <div className="w-full h-[80vh] overflow-hidden">
@@ -58,10 +59,10 @@ const ViewUsersMateri = () => {
                     <span className="loading loading-spinner loading-lg text-gray-600"></span>
                   </div>
                 )}
-                {materiData[0]?.pdf ? (
+                {perangkatMateri[0]?.file ? (
                   <iframe
-                    src={`${import.meta.env.VITE_API_PDF_MATERI_DEV}${
-                      materiData[0].pdf
+                    src={`${import.meta.env.VITE_API_PDF_MODUL_DEV}${
+                      perangkatMateri[0].file
                     }`}
                     className="w-full h-full"
                     onLoad={handleLoad}
@@ -81,4 +82,4 @@ const ViewUsersMateri = () => {
   );
 };
 
-export default ViewUsersMateri;
+export default ViewPerangkatMateriUsersPage;

@@ -27,6 +27,7 @@ import PerangkatMateriAdminPage from "./pages/admin/untukGuru/index.jsx";
 import ViewModulAdminPage from "./pages/admin/untukGuru/viewModul/index.jsx";
 import PresensiAdminPage from "./pages/admin/presensi/index.jsx";
 import PresensiDetail from "./pages/admin/presensi/presensiDetail/index.jsx";
+import ViewPerangkatMateriUsersPage from "./pages/perangkatMateri/viewPerangkatMateri/index.jsx";
 
 function App() {
   return (
@@ -48,7 +49,7 @@ function App() {
             </Route>
             <Route path="perangkat-materi">
               <Route index element={<PerangkatMateriPage />} />
-              <Route path=":id_perangkat" element={<ViewUsersMateri />} />
+              <Route path=":id_modul" element={<ViewPerangkatMateriUsersPage />} />
             </Route>
           </Route>
 
