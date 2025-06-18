@@ -12,10 +12,11 @@ const Footer = () => {
           <p className="text-sm text-center md:text-start">
             Platform edukasi dan dongeng nusantara untuk anak-anak Indonesia.
           </p>
-          <div className="flex gap-2 justify-center md:justify-start">
-            <span className="bg-white p-2 rounded-full shadow">Logo1</span>
-            <span className="bg-white p-2 rounded-full shadow">Logo2</span>
-            <span className="bg-white p-2 rounded-full shadow">Logo3</span>
+          <div className="flex w-full gap-2 justify-center md:justify-start mt-3">
+            <span className=""> <img src="/logo_kementrian.png" className="h-12" /></span>
+            <span className=""> <img src="/DPPM.png" className="h-12" /></span>
+            <span className=""> <img src="/logo_unp.png" className="h-12" /></span>
+            <span className=""> <img src="/garuda.png" className="h-12" /></span>
           </div>
         </div>
 
