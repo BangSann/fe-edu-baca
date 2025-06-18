@@ -1,29 +1,29 @@
-import { useEffect, useState } from "react";
-import MainLayout from "../layout";
-import Pagination from "../admin/components/pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { getMateri } from "../../lib/redux/slice/materiSlice";
+import MainLayout from "../layout";
+import { useEffect, useState } from "react";
+import { getPerangkatMateri } from "../../lib/redux/slice/perangkatMateriSlice";
+import Pagination from "../admin/components/pagination";
 import { Link } from "react-router-dom";
 
-const MateriUsersPage = () => {
+const PerangkatMateriPage = () => {
   // redux state
   const dispatch = useDispatch();
-  const { isLoading, data: materiData } = useSelector((state) => state.materi);
+  const { isLoading, data: perangkatMateriData } = useSelector(
+    (state) => state.perangkatMateri
+  );
   // redux state
-
   useEffect(() => {
-    async function handleGeMateri() {
+    async function handleGetPerangkatMateri() {
       try {
-        const res = await dispatch(getMateri());
-        if (!getMateri.fulfilled.match(res)) {
-          console.log("Gagal fetch:", res);
+        const res = await dispatch(getPerangkatMateri());
+        if (!getPerangkatMateri.fulfilled.match(res)) {
+          console.log(res);
         }
       } catch (error) {
-        console.error("Error fetching materi:", error);
+        console.log(error);
       }
     }
-
-    handleGeMateri();
+    handleGetPerangkatMateri();
   }, []);
 
   // Filter & Pagination
@@ -34,20 +34,20 @@ const MateriUsersPage = () => {
     end: showDataIndex - 1,
   });
 
-  const filteredData = materiData?.filter((item) =>
+  const filteredData = perangkatMateriData?.filter((item) =>
     item?.judul?.toLowerCase().includes(searchParams?.toLowerCase())
   );
-  
+
   const currentDatas = filteredData?.slice(
     dataShowItems.start,
     dataShowItems.end + 1
   );
   // Filter & Pagination
 
+  console.log(perangkatMateriData);
   return (
     <MainLayout>
-      <section className="container mx-auto px-4 py-6">
-        {/* Search Input */}
+      <section className="container mx-auto mt-4 p-4">
         <div className="mb-4 flex items-center">
           <input
             type="text"
@@ -100,7 +100,7 @@ const MateriUsersPage = () => {
                   <div className="p-4">
                     <h3 className="text-lg font-semibold mb-2">{item.judul}</h3>
                     <Link
-                      to={`/materi/${item?.id}`}
+                      to={`/perangkat-materi/${item?.id}`}
                       className="inline-block text-sm text-blue-600 hover:underline"
                     >
                       Lihat Materi PDF
@@ -125,4 +125,4 @@ const MateriUsersPage = () => {
   );
 };
 
-export default MateriUsersPage;
+export default PerangkatMateriPage;

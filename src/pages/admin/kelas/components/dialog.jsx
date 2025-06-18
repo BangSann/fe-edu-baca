@@ -10,10 +10,7 @@ const DialogKelas = ({
   getKelasAction,
 }) => {
   return (
-    <div
-      id="my_modal_sekolah"
-      className={`modal ${isOpen ? "modal-open" : ""}`}
-    >
+    <div id="my_modal_kelas" className={`modal ${isOpen ? "modal-open" : ""}`}>
       <div className="modal-box w-3/5 max-w-5xl">
         <div className="mb-3">
           {action == "add" ? (

@@ -23,6 +23,11 @@ const navItems = [
     path: "sekolah",
   },
   {
+    title: "Presensi Siswa",
+    icon: <FiBook size={24} />,
+    path: "presensi-siswa",
+  },
+  {
     title: "Artikel",
     icon: <FiBook size={24} />,
     path: "artikel",
@@ -30,22 +35,12 @@ const navItems = [
   {
     title: "Materi Siswa",
     icon: <FiBook size={24} />,
-    path: "",
-  },
-  {
-    title: "Bank Bacaan",
-    icon: <FiBook size={24} />,
-    path: "",
-  },
-  {
-    title: "Presensi Siswa",
-    icon: <FiBook size={24} />,
-    path: "",
+    path: "materi",
   },
   {
     title: "Modul Guru",
     icon: <FiBook size={24} />,
-    path: "",
+    path: "perangkat-materi",
   },
 ];
 

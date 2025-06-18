@@ -5,6 +5,7 @@ import { getUserProfile } from "../lib/redux/slice/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import DefaultPage from "../components/defaultPage";
+import Footer from "../components/footer";
 
 const MainLayout = ({ children }) => {
   const navigate = useNavigate();
@@ -38,14 +39,15 @@ const MainLayout = ({ children }) => {
   if (isLoading) {
     return <section></section>;
   } else if (dataProfile && !isLoading) {
-    if (dataProfile[0]?.role?.toLowerCase() == "siswa") {
+    if (dataProfile?.role?.toLowerCase() != "siswa") {
       return <DefaultPage />;
     }
   }
   return (
     <section>
       <Navbar />
-      {children}
+      <section>{children}</section>
+      <Footer />
     </section>
   );
 };

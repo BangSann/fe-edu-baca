@@ -20,6 +20,13 @@ import ProfilePage from "./pages/profile/index.jsx";
 import ViewArtikelUsersPage from "./pages/artikel/viewArtikel/index.jsx";
 import MateriUsersPage from "./pages/materi/index.jsx";
 import ViewUsersMateri from "./pages/materi/viewMateri/index.jsx";
+import PerangkatMateriPage from "./pages/perangkatMateri/index.jsx";
+import MateriAdminPage from "./pages/admin/materiAdmin/index.jsx";
+import ViewMateriAdminPage from "./pages/admin/materiAdmin/viewMateri/index.jsx";
+import PerangkatMateriAdminPage from "./pages/admin/untukGuru/index.jsx";
+import ViewModulAdminPage from "./pages/admin/untukGuru/viewModul/index.jsx";
+import PresensiAdminPage from "./pages/admin/presensi/index.jsx";
+import PresensiDetail from "./pages/admin/presensi/presensiDetail/index.jsx";
 
 function App() {
   return (
@@ -39,6 +46,10 @@ function App() {
               <Route index element={<MateriUsersPage />} />
               <Route path=":id_materi" element={<ViewUsersMateri />} />
             </Route>
+            <Route path="perangkat-materi">
+              <Route index element={<PerangkatMateriPage />} />
+              <Route path=":id_perangkat" element={<ViewUsersMateri />} />
+            </Route>
           </Route>
 
           <Route path="/EduAdmin">
@@ -47,6 +58,21 @@ function App() {
             <Route path="sekolah">
               <Route index element={<SekolahAdminPage />} />
               <Route path=":id_sekolah/kelas" element={<KelasAdminPage />} />
+            </Route>
+
+            <Route path="materi">
+              <Route index element={<MateriAdminPage />} />
+              <Route path=":id_materi" element={<ViewMateriAdminPage />} />
+            </Route>
+
+            <Route path="perangkat-materi">
+              <Route index element={<PerangkatMateriAdminPage />} />
+              <Route path=":id_modul" element={<ViewModulAdminPage />} />
+            </Route>
+
+            <Route path="presensi-siswa">
+              <Route index element={<PresensiAdminPage />} />
+              <Route path=":id_kelas" element={<PresensiDetail />} />
             </Route>
 
             <Route path="users" element={<UsersAdminPage />} />

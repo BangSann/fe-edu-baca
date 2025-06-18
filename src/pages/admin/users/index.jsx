@@ -59,7 +59,7 @@ const UsersAdminPage = () => {
   });
 
   const filteredData = usersAdminData?.filter((item) =>
-    item.username.toLowerCase().includes(searchParams.toLowerCase())
+    item?.username?.toLowerCase().includes(searchParams.toLowerCase())
   );
   const currentDatas = filteredData?.slice(
     dataShowItems.start,

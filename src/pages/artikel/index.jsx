@@ -59,13 +59,13 @@ const ArtikelPage = () => {
   return (
     <MainLayout>
       {isLoading ? (
-        <section className="flex justify-center">
+        <section className="flex justify-center p-4">
           <div className="skeleton h-32 w-full mt-3 container"></div>
         </section>
       ) : (
         <>
           <section className="my-4 flex justify-center">
-            <section className="container">
+            <section className="container p-4">
               <section className="flex">
                 <input
                   type="text"

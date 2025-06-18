@@ -48,7 +48,7 @@ const ViewArtikelUsersPage = () => {
   return (
     <MainLayout>
       {isLoading || loadingNilai ? (
-        <section className=" flex justify-center">
+        <section className=" flex justify-center p-4">
           <div className="skeleton h-32 w-full container mt-3"></div>
         </section>
       ) : (

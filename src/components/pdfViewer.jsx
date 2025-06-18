@@ -32,7 +32,7 @@ const PDFViewer = ({ fileUrl }) => {
     <div className="flex flex-col items-center space-y-4 w-full h-full">
       <div id="pdf-container" className="w-full h-full overflow-y-auto">
         <Document
-          file={"/MAKALAH PBK PERENCANAAN.pdf"}
+          file={fileUrl}
           onLoadSuccess={onDocumentLoadSuccess}
         >
           <Page pageNumber={pageNumber} width={width} />
