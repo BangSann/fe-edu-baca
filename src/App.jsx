@@ -31,11 +31,13 @@ import ViewPerangkatMateriUsersPage from "./pages/perangkatMateri/viewPerangkatM
 import DefaultPage from "./components/defaultPage.jsx";
 import ProtectedRoute from "./components/protectedRoute.jsx";
 import KontakPage from "./pages/kontak/index.jsx";
+import ScrollToTop from "./components/scrollToTop.jsx";
 
 function App() {
   return (
     <BrowserRouter>
       <>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
