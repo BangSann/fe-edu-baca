@@ -33,10 +33,7 @@ const MainPage = () => {
   return (
     <MainLayout>
       <section className="flex flex-col text-start items-center justify-center bg-green-100">
-        <section
-          className="container grid grid-cols-1 md:grid-cols-2 p-4"
-          style={{ height: "95vh" }}
-        >
+        <section className="container grid grid-cols-1 md:grid-cols-2 p-4 h-[50vh] md:h-[96vh]">
           <section className="space-y-8 flex flex-col justify-center">
             <div className="space-y-3">
               <h1 className="font-bold text-4xl">
@@ -67,7 +64,9 @@ const MainPage = () => {
                 to={item.route}
                 key={i}
               >
-                <h1 className="text-lg md:text-2xl font-semibold">{item.title}</h1>
+                <h1 className="text-lg md:text-2xl font-semibold">
+                  {item.title}
+                </h1>
               </Link>
             ))}
           </section>

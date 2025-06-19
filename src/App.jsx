@@ -1,4 +1,4 @@
-import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import MainPage from "./pages";
 import LoginPage from "./pages/login";
@@ -28,32 +28,82 @@ import ViewModulAdminPage from "./pages/admin/untukGuru/viewModul/index.jsx";
 import PresensiAdminPage from "./pages/admin/presensi/index.jsx";
 import PresensiDetail from "./pages/admin/presensi/presensiDetail/index.jsx";
 import ViewPerangkatMateriUsersPage from "./pages/perangkatMateri/viewPerangkatMateri/index.jsx";
+import DefaultPage from "./components/defaultPage.jsx";
+import ProtectedRoute from "./components/protectedRoute.jsx";
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <>
         <Routes>
-          <Route path="/">
-            <Route index element={<MainPage />} />
-            <Route path="login" element={<LoginPage />} />
+          <Route path="/" element={<MainPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/unauthorized" element={<DefaultPage />} />
 
-            <Route path="artikel">
-              <Route index element={<ArtikelPage />} />
-              <Route path=":id_artikel" element={<ViewArtikelUsersPage />} />
-            </Route>
-            <Route path="profile" element={<ProfilePage />} />
-            <Route path="materi">
-              <Route index element={<MateriUsersPage />} />
-              <Route path=":id_materi" element={<ViewUsersMateri />} />
-            </Route>
-            <Route path="perangkat-materi">
-              <Route index element={<PerangkatMateriPage />} />
-              <Route
-                path=":id_modul"
-                element={<ViewPerangkatMateriUsersPage />}
-              />
-            </Route>
+          <Route path="/artikel">
+            <Route
+              index
+              element={
+                <ProtectedRoute>
+                  <ArtikelPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path=":id_artikel"
+              element={
+                <ProtectedRoute>
+                  <ViewArtikelUsersPage />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/materi">
+            <Route
+              index
+              element={
+                <ProtectedRoute>
+                  <MateriUsersPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path=":id_materi"
+              element={
+                <ProtectedRoute>
+                  <ViewUsersMateri />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+
+          <Route path="/perangkat-materi">
+            <Route
+              index
+              element={
+                <ProtectedRoute>
+                  <PerangkatMateriPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path=":id_modul"
+              element={
+                <ProtectedRoute>
+                  <ViewPerangkatMateriUsersPage />
+                </ProtectedRoute>
+              }
+            />
           </Route>
 
           <Route path="/EduAdmin">
@@ -98,6 +148,7 @@ function App() {
             <Route path="login" element={<LoginAdminPage />} />
           </Route>
         </Routes>
+
         <ToastContainer
           position="bottom-right"
           autoClose={3000}
@@ -110,7 +161,7 @@ function App() {
           pauseOnHover
         />
       </>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

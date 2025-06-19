@@ -9,6 +9,9 @@ import DeleteNilai from "./components/deleteNilai";
 import { useDispatch, useSelector } from "react-redux";
 import { getnilaiLiterasiByIdArtikel } from "../../../../../lib/redux/slice/nilaiLiterasiSlice";
 
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+
 const NilaiLiterasiPage = () => {
   const { id_artikel } = useParams();
   // redux state
@@ -49,6 +52,7 @@ const NilaiLiterasiPage = () => {
   const filteredData = dataNilai?.nilai?.filter(
     (item) =>
       item.user?.name?.toLowerCase().includes(searchParams.toLowerCase()) ||
+      // item?.user?.sekolah?.nama_sekolah?.toLowerCase().includes(searchParams.toLowerCase()) ||
       item.user?.username?.toLowerCase().includes(searchParams.toLowerCase())
   );
 
@@ -57,6 +61,29 @@ const NilaiLiterasiPage = () => {
     dataShowItems.end + 1
   );
   // filter state
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Daftar Nilai Literasi", 14, 15);
+
+    const tableData = filteredData.map((item, index) => [
+      index + 1,
+      item.user?.name || "-",
+      item.user?.username || "-",
+      item.user?.sekolah ? `SDN ${item.user.sekolah}` : "-",
+      item.user?.kelas || "-",
+      item.nilai,
+    ]);
+
+    autoTable(doc, {
+      head: [["No", "Nama", "Username", "Sekolah", "Kelas", "Nilai"]],
+      body: tableData,
+      startY: 20,
+    });
+
+    doc.save("nilai-literasi.pdf");
+  };
+
   return (
     <AdminLayout>
       <div className="flex justify-between">
@@ -77,7 +104,7 @@ const NilaiLiterasiPage = () => {
             Clear
           </button>
         </div>
-        <button className="btn btn-secondary text-lg" onClick={() => {}}>
+        <button className="btn btn-secondary text-lg" onClick={handleExportPDF}>
           <BsPrinter size={24} /> Export Nilai
         </button>
       </div>

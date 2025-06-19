@@ -3,10 +3,11 @@ import * as yup from "yup";
 import TextError from "../../components/textError";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signIn } from "../../lib/redux/slice/authSlice";
+import { getUserProfile, signIn } from "../../lib/redux/slice/authSlice";
 import { toast } from "react-toastify";
 import DefaultPage from "../../components/defaultPage";
 import { getCookies, setCookie } from "cookies-next";
+import { useEffect } from "react";
 
 const signInSchema = yup.object().shape({
   EmailOrUsername: yup.string().required("Please provide an username"),
@@ -16,7 +17,18 @@ const signInSchema = yup.object().shape({
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.auth);
+
+  const { isLoading: profileLoading, data: dataProfile } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    async function handleGetProfile() {
+      dispatch(getUserProfile());
+    }
+
+    handleGetProfile();
+  }, []);
 
   async function handleSignIn(data) {
     try {
@@ -28,10 +40,18 @@ const LoginPage = () => {
           expires: new Date(Date.now() + 60 * 24 * 60 * 1000), // 60 menit * 24 jam * 60 detik * 1000 ms
         });
 
-        toast.success("Berhasil login");
-        navigate("/");
+        const response = await dispatch(getUserProfile());
+        if (getUserProfile.fulfilled.match(response)) {
+          toast.success("Berhasil login");
+          if (response.payload.data.role.toLowerCase() == "siswa") {
+            navigate("/");
+          }
+          if (response.payload.data.role.toLowerCase() == "admin") {
+            navigate("/eduadmin");
+          }
+        }
       } else {
-        toast.error("Username or password not correct");
+        toast.error("username atau password salah");
       }
     } catch (error) {
       console.log(error);
@@ -44,15 +64,20 @@ const LoginPage = () => {
     secure: true,
   });
 
-  if (accessToken) {
-    return <DefaultPage />;
+  if (profileLoading) {
+    return;
+  } else {
+    if (dataProfile?.role && accessToken) {
+      return <DefaultPage />;
+    }
   }
+
   return (
     <section className="flex justify-center items-center h-screen bg-green-100">
       <div className="card shadow bg-white">
         <div className="card-body space-y-3">
           <div className="text-start space-y-2">
-            <h1 className="text-2xl font-semibold">Sign In</h1>
+            <h1 className="text-2xl font-semibold">Masuk</h1>
             <p className="text-sm font-light">
               Silakan masuk sebagai siswa untuk mengakses materi dan fitur
               pembelajaran.
@@ -69,7 +94,7 @@ const LoginPage = () => {
               <Form className="space-y-3">
                 <div>
                   <input
-                    className="input input-xl input-primary w-full"
+                    className="input input-xl  bg-white w-full"
                     type="text"
                     placeholder="username"
                     name="EmailOrUsername"
@@ -84,7 +109,7 @@ const LoginPage = () => {
                 </div>
                 <div>
                   <input
-                    className="input input-xl input-primary w-full"
+                    className="input input-xl bg-white w-full"
                     type="password"
                     placeholder="password"
                     name="password"
@@ -102,9 +127,9 @@ const LoginPage = () => {
                   <button
                     className="btn btn-lg btn-primary w-full"
                     type="submit"
-                    disabled={isLoading}
+                    disabled={profileLoading}
                   >
-                    Sign In
+                    Masuk
                   </button>
                 </div>
               </Form>

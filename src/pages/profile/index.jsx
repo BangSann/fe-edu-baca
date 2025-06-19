@@ -40,7 +40,6 @@ const ProfilePage = () => {
       console.log(error);
     }
   }
-  console.log(dataProfile);
 
   useEffect(() => {
     if (dataProfile?.id) {
@@ -57,7 +56,7 @@ const ProfilePage = () => {
   return (
     <MainLayout>
       <section className="h-[calc(100vh-65px)] flex justify-center mt-4">
-        <div className="card bg-base-100 container space-y-4">
+        <div className="card  container space-y-4">
           <div className="flex justify-between shadow-sm p-6">
             {/* Avatar */}
             <div className="flex items-center gap-2 w-full">
@@ -85,43 +84,54 @@ const ProfilePage = () => {
               className="btn btn-error btn-sm text-white"
               onClick={handleSignOut}
             >
-              Log Out
+              Keluar
             </button>
 
             {/* Logout Button */}
           </div>
-          <div className="flex flex-col gap-4 text-start shadow-sm p-6 w-full bg-white rounded-md">
-            <h1 className="text-xl font-semibold">
-              Resume Presensi {dataProfile?.kelas?.kelas}
-            </h1>
+          {dataProfile?.role?.toLowerCase() == "admin" ? (
+            <section className="shadow-sm p-6 w-full bg-white rounded-md">
+              <button
+                className="btn btn-primary"
+                onClick={() => navigate("/eduadmin")}
+              >
+                Buka Dashboard Admin
+              </button>
+            </section>
+          ) : (
+            <div className="flex flex-col gap-4 text-start shadow-sm p-6 w-full bg-white rounded-md">
+              <h1 className="text-xl font-semibold">
+                Resume Presensi {dataProfile?.kelas?.kelas}
+              </h1>
 
-            <div className="overflow-x-auto">
-              <table className="table table-zebra w-full border border-gray-300">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th className="w-2/3">Tanggal</th>
-                    <th className="w-1/3">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {dataPresensi?.length > 0 ? (
-                    dataPresensi.map((item, index) => (
-                      <tr key={index}>
-                        <td>{item.tanggal}</td>
-                        <td>{item.status}</td>
-                      </tr>
-                    ))
-                  ) : (
+              <div className="overflow-x-auto">
+                <table className="table table-zebra w-full border border-gray-300">
+                  <thead className="bg-gray-100">
                     <tr>
-                      <td colSpan="2" className="text-center text-gray-500">
-                        Tidak ada data presensi
-                      </td>
+                      <th className="w-2/3">Tanggal</th>
+                      <th className="w-1/3">Status</th>
                     </tr>
-                  )}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {dataPresensi?.length > 0 ? (
+                      dataPresensi.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.tanggal}</td>
+                          <td>{item.status}</td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="2" className="text-center text-gray-500">
+                          Tidak ada data presensi
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
     </MainLayout>

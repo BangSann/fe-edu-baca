@@ -1,10 +1,10 @@
-import { BsFilePerson } from "react-icons/bs";
+import { BsBook, BsCheckCircle, BsFilePerson, BsJournalBookmark } from "react-icons/bs";
 import { FiBook, FiHome } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "../../../lib/redux/slice/authSlice";
 import { deleteCookie } from "cookies-next";
-import { FaSchool } from "react-icons/fa";
+import { FaChalkboardTeacher, FaSchool } from "react-icons/fa";
 
 const navItems = [
   {
@@ -24,22 +24,22 @@ const navItems = [
   },
   {
     title: "Presensi Siswa",
-    icon: <FiBook size={24} />,
+    icon: <BsCheckCircle size={24} />,
     path: "presensi-siswa",
   },
   {
     title: "Artikel",
-    icon: <FiBook size={24} />,
+    icon: <BsJournalBookmark size={24} />,
     path: "artikel",
   },
   {
     title: "Materi Siswa",
-    icon: <FiBook size={24} />,
+    icon: <BsBook size={24} />,
     path: "materi",
   },
   {
     title: "Modul Guru",
-    icon: <FiBook size={24} />,
+    icon: <FaChalkboardTeacher size={24} />,
     path: "perangkat-materi",
   },
 ];
@@ -53,7 +53,7 @@ const SideBar = () => {
       const res = await dispatch(signOut());
       if (signOut.fulfilled.match(res)) {
         deleteCookie("accessToken");
-        navigate("/eduadmin/login");
+        navigate("/login");
       } else {
         console.log("tidak  bisa logout");
       }
@@ -85,7 +85,7 @@ const SideBar = () => {
               className="btn btn-error w-full text-white "
               onClick={handleSignOut}
             >
-              Sign Out
+              Keluar
             </button>
           </li>
         </ul>

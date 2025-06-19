@@ -121,8 +121,28 @@ const ArtikelQuizLiterasi = ({ dataArtikel }) => {
 
   const current = dataArtikel.soal[currentSoal];
 
+  // quiz time
+  const [quizTimeLeft, setQuizTimeLeft] = useState(15 * 60); // 15 menit untuk kuis
+
+  useEffect(() => {
+    if (!startQuiz || dataNilai) return;
+
+    const timer = setInterval(() => {
+      setQuizTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          handleUploadNilaiQuiz(); // auto submit jika waktu habis
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [startQuiz, dataNilai]);
+
   return (
-    <section className="p-4 w-full mx-auto space-y-6 flex flex-col items-center justify-center">
+    <section className="p-4 w-full mx-auto space-y-6 flex flex-col items-center h-[96vh]">
       {!startQuiz && (
         <div className="bg-base-100 shadow-md container">
           <div className="p-4">
@@ -159,9 +179,14 @@ const ArtikelQuizLiterasi = ({ dataArtikel }) => {
               <h3 className="text-lg font-semibold">
                 Soal {currentSoal + 1} dari {dataArtikel.soal.length}
               </h3>
-              <span className="badge badge-secondary capitalize">
-                {dataArtikel.type}
-              </span>
+              <div className="space-x-2">
+                <span className="badge badge-info text-white">
+                  Sisa Waktu: {formatTime(quizTimeLeft)}
+                </span>
+                <span className="badge badge-secondary capitalize">
+                  {dataArtikel.type}
+                </span>
+              </div>
             </div>
 
             <h4 className="font-semibold text-start text-2xl">

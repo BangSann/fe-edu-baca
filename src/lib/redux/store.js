@@ -9,6 +9,7 @@ import nilaiLiterasiSlice from "./slice/nilaiLiterasiSlice";
 import materiSlice from "./slice/materiSlice";
 import perangkatMateriSlice from "./slice/perangkatMateriSlice";
 import presensiSlice from "./slice/presensiSlice";
+import dashboardSlice from "./slice/dahsboardSlice";
 
 export default configureStore({
   reducer: {
@@ -22,5 +23,6 @@ export default configureStore({
     materi: materiSlice,
     perangkatMateri: perangkatMateriSlice,
     presensi: presensiSlice,
+    dashboard: dashboardSlice,
   },
 });
