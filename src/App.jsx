@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import MainPage from "./pages";
 import LoginPage from "./pages/login";
@@ -31,7 +31,7 @@ import ViewPerangkatMateriUsersPage from "./pages/perangkatMateri/viewPerangkatM
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <>
         <Routes>
           <Route path="/">
@@ -49,7 +49,10 @@ function App() {
             </Route>
             <Route path="perangkat-materi">
               <Route index element={<PerangkatMateriPage />} />
-              <Route path=":id_modul" element={<ViewPerangkatMateriUsersPage />} />
+              <Route
+                path=":id_modul"
+                element={<ViewPerangkatMateriUsersPage />}
+              />
             </Route>
           </Route>
 
@@ -107,7 +110,7 @@ function App() {
           pauseOnHover
         />
       </>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
