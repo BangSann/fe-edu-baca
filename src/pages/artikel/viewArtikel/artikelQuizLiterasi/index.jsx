@@ -100,7 +100,7 @@ const ArtikelQuizLiterasi = ({ dataArtikel }) => {
 
   if (dataNilai) {
     return (
-      <section className="flex justify-center items-center h-[50vh] p-4">
+      <section className="flex justify-center items-center h-[100vh] p-4">
         <div className="card bg-green-100 border border-green-300 shadow-md p-6 text-center">
           <h2 className="text-xl font-semibold text-green-800 mb-2">
             Quiz Sudah Selesai

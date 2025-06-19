@@ -30,6 +30,7 @@ import PresensiDetail from "./pages/admin/presensi/presensiDetail/index.jsx";
 import ViewPerangkatMateriUsersPage from "./pages/perangkatMateri/viewPerangkatMateri/index.jsx";
 import DefaultPage from "./components/defaultPage.jsx";
 import ProtectedRoute from "./components/protectedRoute.jsx";
+import KontakPage from "./pages/kontak/index.jsx";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/unauthorized" element={<DefaultPage />} />
+          <Route path="/contact" element={<KontakPage />} />
 
           <Route path="/artikel">
             <Route

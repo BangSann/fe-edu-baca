@@ -24,7 +24,7 @@ const actionList = [
   },
   {
     title: "Kontak",
-    route: "/",
+    route: "/contact",
   },
 ];
 
