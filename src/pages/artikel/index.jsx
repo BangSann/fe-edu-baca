@@ -63,6 +63,18 @@ const ArtikelPage = () => {
           <section className="flex justify-center p-4">
             <div className="skeleton h-32 w-full mt-3 container"></div>
           </section>
+        ) : currentDatas?.length <= 0 ? (
+          <section className="flex justify-center items-center h-full">
+            <div className="text-center">
+              <h1 className="text-2xl font-semibold">
+                Artikel Tidak Ditemukan
+              </h1>
+              <p className="text-gray-500 mt-2">
+                Coba ubah kata kunci pencarian atau periksa kembali kategori
+                yang dipilih.
+              </p>
+            </div>
+          </section>
         ) : (
           <>
             <section className="my-4 flex justify-center">

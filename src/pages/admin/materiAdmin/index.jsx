@@ -84,7 +84,13 @@ const MateriAdminPage = () => {
         </div>
         {isLoading ? (
           <div className="skeleton h-32 w-full mt-3"></div>
-        ) : (
+        ) : currentDatas?.length <=0 ?(
+          <section>
+            <div className="alert alert-warning mt-3">
+              <span>Materi tidak ditemukan</span>
+            </div>
+          </section>
+        ): (
           <section>
             <section className="mt-3">
               <div className="overflow-x-auto">

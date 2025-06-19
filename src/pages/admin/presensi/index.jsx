@@ -7,6 +7,7 @@ import { getDataSekolah } from "../../../lib/redux/slice/sekolahAdminSlice";
 import { getDataKelas } from "../../../lib/redux/slice/kelasAdminSlice";
 import Pagination from "../components/pagination";
 import { useNavigate } from "react-router-dom";
+import DialogPresensi from "./components/dialogPresensi";
 
 const PresensiAdminPage = () => {
   const navigate = useNavigate();
@@ -27,7 +28,10 @@ const PresensiAdminPage = () => {
     (state) => state.kelasAdmin
   );
 
-  const selectedKelas = dataKelas?.filter((item) => item?.id == id_sekolah);
+  const selectedKelas =
+    dataKelas.length >= 1
+      ? dataKelas?.filter((item) => item?.id == id_sekolah)
+      : [];
 
   const isLoading = sekolahLoading || kelasLoading || presensiLoading;
 
@@ -43,7 +47,7 @@ const PresensiAdminPage = () => {
   }, []);
 
   const filteredPresensi = id_kelas
-    ? presensiData.filter((item) => item.id === parseInt(id_kelas))
+    ? presensiData?.filter((item) => item.id === parseInt(id_kelas))
     : presensiData;
 
   const showDataIndex = 5;
@@ -56,6 +60,11 @@ const PresensiAdminPage = () => {
     dataShowItems.start,
     dataShowItems.end + 1
   );
+
+  // Dialog state
+  const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelectedData] = useState(false);
+  // Dialog state
 
   return (
     <AdminLayout>
@@ -116,12 +125,21 @@ const PresensiAdminPage = () => {
                     <td>{i + 1}</td>
                     <td>{item?.kelas}</td>
                     <td>{item?.siswa?.length}</td>
-                    <td>
+                    <td className="flex gap-2 w-[300px]">
+                      {/* <button
+                        className="btn btn-secondary"
+                        onClick={() => {
+                          setSelectedData(item);
+                          setIsOpen(true);
+                        }}
+                      >
+                        Lihat Presensi
+                      </button> */}
                       <button
-                        className="btn btn-primary w-full"
+                        className="btn btn-primary"
                         onClick={() => navigate(`${item?.id}`)}
                       >
-                        Buka Presensi
+                        Buat Presensi
                       </button>
                     </td>
                   </tr>
@@ -136,6 +154,11 @@ const PresensiAdminPage = () => {
           />
         </section>
       )}
+      <DialogPresensi
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        selectedData={selected}
+      />
     </AdminLayout>
   );
 };

@@ -64,7 +64,7 @@ const KelasAdminPage = () => {
             <GrFormPrevious />
           </Link>
           <div className="input text-center w-full bg-gray-300 px-2">
-            {dataKelas?.nama_sekolah | ""}
+            {dataKelas?.nama_sekolah || ""}
           </div>
         </div>
       </div>
@@ -120,6 +120,7 @@ const KelasAdminPage = () => {
                               setAction("delete");
                               setSelectedData(item);
                             }}
+                            className="cursor-pointer"
                           />
                           <BiEdit
                             size={24}
@@ -128,6 +129,7 @@ const KelasAdminPage = () => {
                               setAction("edit");
                               setSelectedData(item);
                             }}
+                            className="cursor-pointer"
                           />
                         </div>
                       </div>

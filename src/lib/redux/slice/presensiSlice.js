@@ -14,11 +14,26 @@ export const fetchPresensi = createAsyncThunk(
     }
   }
 );
-export const fetchPresensiById = createAsyncThunk(
-  "presensi/fetchPresensiById",
-  async (id_kelas, { rejectWithValue }) => {
+export const fetchPresensiTanggal = createAsyncThunk(
+  "presensi/fetchPresensiTanggal",
+  async ({ id_kelas, tanggal }, { rejectWithValue }) => {
     try {
-      const response = await eduApi.get(`${API_URL}?id_kelas=${id_kelas}`);
+      const response = await eduApi.get(
+        `${API_URL}?id_kelas=${id_kelas}&&tanggal=${tanggal}`
+      );
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
+export const fetchPresensiByUser = createAsyncThunk(
+  "presensi/fetchPresensiByUser",
+  async ({ id_kelas, id_user }, { rejectWithValue }) => {
+    try {
+      const response = await eduApi.get(
+        `${API_URL}?id_kelas=${id_kelas}&&id_user=${id_user}`
+      );
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -30,11 +45,12 @@ export const fetchPresensiById = createAsyncThunk(
 export const createPresensi = createAsyncThunk(
   "presensi/createPresensi",
   async (data, { rejectWithValue }) => {
+    // console.log(data)
     try {
       const response = await eduApi.post(API_URL, data);
       return response.data.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error);
     }
   }
 );
@@ -90,15 +106,15 @@ const presensiSlice = createSlice({
       })
 
       // Fetch by id
-      .addCase(fetchPresensiById.pending, (state) => {
+      .addCase(fetchPresensiTanggal.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchPresensiById.fulfilled, (state, action) => {
+      .addCase(fetchPresensiTanggal.fulfilled, (state, action) => {
         state.loading = false;
         state.data = [action.payload];
       })
-      .addCase(fetchPresensiById.rejected, (state, action) => {
+      .addCase(fetchPresensiTanggal.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
@@ -142,6 +158,20 @@ const presensiSlice = createSlice({
         state.data = state.data.filter((p) => p.id !== action.payload);
       })
       .addCase(deletePresensi.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Fetch by user
+      .addCase(fetchPresensiByUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchPresensiByUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(fetchPresensiByUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
