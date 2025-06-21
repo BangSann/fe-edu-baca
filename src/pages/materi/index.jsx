@@ -46,7 +46,7 @@ const MateriUsersPage = () => {
 
   return (
     <MainLayout>
-      <section className="container mx-auto px-4 py-6 h-[calc(100vh-65px)]">
+      <section className="container mx-auto px-4 py-6 min-h-[calc(100vh-65px)]">
         {/* Search Input */}
         <div className="mb-4 flex items-center">
           <input

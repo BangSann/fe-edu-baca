@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const menuGuest = [
   { title: "Beranda", route: "/" },
-  { title: "Bacaan", route: "/artikel" },
+  { title: "Bacaan", route: "/bacaan" },
   { title: "Proyek Literasi", route: "/artikel?type=quiz" },
   { title: "Kontak", route: "/contact" },
   { title: "Masuk", route: "/login" },
@@ -11,7 +11,7 @@ const menuGuest = [
 
 const menuLoggedIn = [
   { title: "Beranda", route: "/" },
-  { title: "Bacaan", route: "/artikel" },
+  { title: "Bacaan", route: "/bacaan" },
   { title: "Proyek Literasi", route: "/artikel?type=quiz" },
   { title: "Kontak", route: "/contact" },
   { title: "profil", route: "/profile" },

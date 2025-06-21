@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "../../../lib/redux/slice/authSlice";
 import { deleteCookie } from "cookies-next";
+import { IoLibraryOutline } from "react-icons/io5";
 import { FaChalkboardTeacher, FaSchool } from "react-icons/fa";
 
 const navItems = [
@@ -41,6 +42,11 @@ const navItems = [
     title: "Modul Guru",
     icon: <FaChalkboardTeacher size={24} />,
     path: "perangkat-materi",
+  },
+  {
+    title: "Bank Bacaan",
+    icon: <IoLibraryOutline size={24} />,
+    path: "bacaan",
   },
 ];
 

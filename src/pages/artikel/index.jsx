@@ -58,7 +58,7 @@ const ArtikelPage = () => {
 
   return (
     <MainLayout>
-      <section className="h-[calc(100vh-65px)]">
+      <section className="min-h-[calc(100vh-65px)]">
         {isLoading ? (
           <section className="flex justify-center p-4">
             <div className="skeleton h-32 w-full mt-3 container"></div>

@@ -12,7 +12,7 @@ const actionList = [
   },
   {
     title: "Bank Bacaan",
-    route: "/artikel",
+    route: "/bacaan",
   },
   {
     title: "Untuk Guru",

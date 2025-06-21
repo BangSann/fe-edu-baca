@@ -1,30 +1,20 @@
-import { useDispatch, useSelector } from "react-redux";
-import MainLayout from "../layout";
 import { useEffect, useState } from "react";
-import { getPerangkatMateri } from "../../lib/redux/slice/perangkatMateriSlice";
+import MainLayout from "../layout";
+import { getBacaan } from "../../lib/redux/slice/bacaanSlice";
+import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../admin/components/pagination";
-import { Link } from "react-router-dom";
 
-const PerangkatMateriPage = () => {
+const BacaanUserPage = () => {
   // redux state
   const dispatch = useDispatch();
-  const { isLoading, data: perangkatMateriData } = useSelector(
-    (state) => state.perangkatMateri
-  );
-  // redux state
+  const { isLoading, data: dataBacaan } = useSelector((state) => state.bacaan);
   useEffect(() => {
-    async function handleGetPerangkatMateri() {
-      try {
-        const res = await dispatch(getPerangkatMateri());
-        if (!getPerangkatMateri.fulfilled.match(res)) {
-          console.log(res);
-        }
-      } catch (error) {
-        console.log(error);
-      }
+    async function handleGetBacaan() {
+      dispatch(getBacaan());
     }
-    handleGetPerangkatMateri();
+    handleGetBacaan();
   }, []);
+  // redux state
 
   // Filter & Pagination
   const [searchParams, setSearchParams] = useState("");
@@ -34,7 +24,7 @@ const PerangkatMateriPage = () => {
     end: showDataIndex - 1,
   });
 
-  const filteredData = perangkatMateriData?.filter((item) =>
+  const filteredData = dataBacaan?.filter((item) =>
     item?.judul?.toLowerCase().includes(searchParams?.toLowerCase())
   );
 
@@ -43,27 +33,23 @@ const PerangkatMateriPage = () => {
     dataShowItems.end + 1
   );
   // Filter & Pagination
-
   return (
     <MainLayout>
-      <section className="container mx-auto mt-4 p-4 min-h-[calc(100vh-65px)]">
-        <div className="mb-4 flex items-center">
+      <section className="min-h-[calc(100vh-65px)] container mx-auto mt-3 px-3 space-y-3">
+        <div className="flex">
           <input
-            type="text"
-            placeholder="Cari materi..."
-            value={searchParams}
+            type="search"
+            className="input input-neutral w-full rounded-e-none"
             onChange={(e) => setSearchParams(e.target.value)}
-            className="w-full px-4 py-2 border rounded-e-none border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={searchParams}
           />
           <button
             className="btn btn-outline rounded-s-none"
             onClick={() => setSearchParams("")}
           >
-            Clear
+            Bersihkan
           </button>
         </div>
-
-        {/* Loading Skeleton */}
         {isLoading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {Array.from({ length: showDataIndex }).map((_, index) => (
@@ -76,27 +62,29 @@ const PerangkatMateriPage = () => {
         ) : currentDatas.length <= 0 ? (
           <div className="flex flex-col items-center justify-center h-40 text-center p-4 border rounded-md">
             <p className="text-xl font-bold text-red-500 mb-4">
-              Materi Belum Ada
+              Bacaan Belum Ada
             </p>
           </div>
         ) : (
           <>
             {/* Data Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 cursor-pointer">
               {currentDatas?.map((item, index) => (
                 <div
                   key={index}
                   className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                 >
                   <img
-                    src={import.meta.env.VITE_API_IMAGE_MODUL_DEV + item?.cover}
+                    src={
+                      import.meta.env.VITE_API_IMAGE_MATERI_DEV + item?.cover
+                    }
                     alt={item.judul}
                     className="w-full h-48 object-contain"
                   />
                   <div className="p-4">
                     <h3 className="text-lg font-semibold mb-2">{item.judul}</h3>
                     <Link
-                      to={`/perangkat-materi/${item?.id}`}
+                      to={`/materi/${item?.id}`}
                       className="inline-block text-sm text-blue-600 hover:underline"
                     >
                       Lihat Materi PDF
@@ -121,4 +109,4 @@ const PerangkatMateriPage = () => {
   );
 };
 
-export default PerangkatMateriPage;
+export default BacaanUserPage;

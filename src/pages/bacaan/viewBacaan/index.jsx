@@ -1,31 +1,23 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getPerangkatMateriById } from "../../../lib/redux/slice/perangkatMateriSlice";
-import { useEffect, useState } from "react";
 import MainLayout from "../../layout";
 import { GrFormPrevious } from "react-icons/gr";
 
-const ViewPerangkatMateriUsersPage = () => {
-  const { id_modul } = useParams();
+const ViewBacaanUserPage = () => {
+  const { id_bacaan } = useParams();
+
+  // redux state
   const dispatch = useDispatch();
-  const { isLoading, data: perangkatMateri } = useSelector(
-    (state) => state.perangkatMateri
-  );
-
+  const { isLoading, data: dataBacaan } = useSelector((state) => state.bacaan);
   useEffect(() => {
-    async function handleGeMateri() {
-      try {
-        const res = await dispatch(getPerangkatMateriById(id_modul));
-        if (!getPerangkatMateriById.fulfilled.match(res)) {
-          console.error("Gagal fetch:", res);
-        }
-      } catch (error) {
-        console.error("Error fetching materi:", error);
-      }
+    async function handleGetBacaan() {
+      dispatch(getBacaanById(id_bacaan));
     }
-
-    handleGeMateri();
-  }, [id_modul]);
+    handleGetBacaan();
+  }, []);
+  // redux state
+  console.log(dataBacaan);
 
   const [pdfLoaded, setPdfLoaded] = useState(false);
 
@@ -36,10 +28,9 @@ const ViewPerangkatMateriUsersPage = () => {
   const handleError = () => {
     setPdfLoaded(false);
   };
-
   return (
     <MainLayout>
-      <section className="container mx-auto px-4 py-6 min-h-[calc(100vh-65px)]">
+      <section className="mx-auto container px-3 mt-3 min-h-[calc(100vh-65px)]">
         {isLoading ? (
           <section className="skeleton h-34 w-full"></section>
         ) : (
@@ -48,22 +39,20 @@ const ViewPerangkatMateriUsersPage = () => {
               <Link to={"../"} className="btn btn-outline rounded-e-none">
                 <GrFormPrevious />
               </Link>
-              <h1 className="input input-neutral rounded-s-none w-full bg-gray-300 overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-gray-500">
-                {perangkatMateri[0]?.judul || "Judul Tidak Tersedia"}
+              <h1 className="input input-neutral rounded-s-none w-full bg-gray-300">
+                {"Judul Tidak Tersedia"}
               </h1>
             </section>
-            <div className="w-full h-[80vh] overflow-hidden">
+            <div className="w-full overflow-hidden">
               <div className="w-full h-[80vh] rounded-xl border border-gray-300 shadow-md overflow-hidden relative bg-gray-100">
                 {!pdfLoaded && (
                   <div className="absolute inset-0 flex items-center justify-center bg-white z-10">
                     <span className="loading loading-spinner loading-lg text-gray-600"></span>
                   </div>
                 )}
-                {perangkatMateri[0]?.file ? (
+                {true ? (
                   <iframe
-                    src={`${import.meta.env.VITE_API_PDF_MODUL_DEV}${
-                      perangkatMateri[0].file
-                    }`}
+                    src={`/dummy_materi.pdf`}
                     className="w-full h-full"
                     onLoad={handleLoad}
                     onError={handleError}
@@ -82,4 +71,4 @@ const ViewPerangkatMateriUsersPage = () => {
   );
 };
 
-export default ViewPerangkatMateriUsersPage;
+export default ViewBacaanUserPage;

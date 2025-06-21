@@ -38,7 +38,7 @@ const ViewUsersMateri = () => {
 
   return (
     <MainLayout>
-      <section className="container mx-auto px-4 py-6 h-[calc(100vh-65px)]">
+      <section className="container mx-auto px-4 py-6 min-h-[calc(100vh-65px)]">
         {isLoading ? (
           <section className="skeleton h-34 w-full"></section>
         ) : (
@@ -47,7 +47,7 @@ const ViewUsersMateri = () => {
               <Link to={"../"} className="btn btn-outline rounded-e-none">
                 <GrFormPrevious />
               </Link>
-              <h1 className="input input-neutral rounded-s-none w-full bg-gray-300">
+              <h1 className="input input-neutral rounded-s-none w-full bg-gray-300 overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-gray-500">
                 {materiData[0]?.judul || "Judul Tidak Tersedia"}
               </h1>
             </section>

@@ -32,6 +32,10 @@ import DefaultPage from "./components/defaultPage.jsx";
 import ProtectedRoute from "./components/protectedRoute.jsx";
 import KontakPage from "./pages/kontak/index.jsx";
 import ScrollToTop from "./components/scrollToTop.jsx";
+import BankBacaanAmdinPage from "./pages/admin/bankBacaan/index.jsx";
+import ViewBacaanAdminPage from "./pages/admin/bankBacaan/viewBacaan/index.jsx";
+import BacaanUserPage from "./pages/bacaan/index.jsx";
+import ViewBacaanUserPage from "./pages/bacaan/viewBacaan/index.jsx";
 
 function App() {
   return (
@@ -110,6 +114,25 @@ function App() {
             />
           </Route>
 
+          <Route path="/bacaan">
+            <Route
+              index
+              element={
+                <ProtectedRoute>
+                  <BacaanUserPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path=":id_bacaan"
+              element={
+                <ProtectedRoute>
+                  <ViewBacaanUserPage />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+
           <Route path="/EduAdmin">
             <Route index element={<AdminDashboardPage />} />
 
@@ -147,6 +170,11 @@ function App() {
                   <Route path="nilai" element={<NilaiLiterasiPage />} />
                 </Route>
               </Route>
+            </Route>
+
+            <Route path="bacaan">
+              <Route index element={<BankBacaanAmdinPage />} />
+              <Route path=":id_bacaan" element={<ViewBacaanAdminPage />} />
             </Route>
 
             <Route path="login" element={<LoginAdminPage />} />
