@@ -1,4 +1,4 @@
-import { getCookies } from "cookies-next";
+import { deleteCookie, getCookies } from "cookies-next";
 import Navbar from "../components/navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile } from "../lib/redux/slice/authSlice";
@@ -15,13 +15,20 @@ const MainLayout = ({ children }) => {
   useEffect(() => {
     const handleAuth = async () => {
       try {
-        await dispatch(getUserProfile());
+        const res = await dispatch(getUserProfile());
+
+        if (!getUserProfile.fulfilled.match(res)) {
+          deleteCookie("accessToken");
+          navigate("/")
+        }
       } catch (err) {
         console.error(err);
       }
     };
 
-    handleAuth();
+    if (accessToken) {
+      handleAuth();
+    }
   }, [accessToken, dispatch, navigate]);
 
   return (

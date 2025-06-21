@@ -36,7 +36,7 @@ const Pagination = ({
         >
           «
         </button>
-        <button className="btn btn-outline">Page {currentPage}</button>
+        <button className="btn btn-outline">Halaman {currentPage}</button>
         <button
           className="join-item btn"
           onClick={handleNextPage}

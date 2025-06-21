@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getNilaiLiterasiByIdUsersIdArtikel,
@@ -7,8 +7,9 @@ import {
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteCookie, setCookie } from "cookies-next";
+import Swal from "sweetalert2";
 
-const ArtikelQuizLiterasi = ({ dataArtikel }) => {
+const ArtikelQuizLiterasi = ({ dataArtikel , setQuizSubmitted }) => {
   const dispatch = useDispatch();
   const { isLoading, data: dataNilai } = useSelector(
     (state) => state.nilaiLiterasi
@@ -23,6 +24,8 @@ const ArtikelQuizLiterasi = ({ dataArtikel }) => {
   const [currentSoal, setCurrentSoal] = useState(0);
   const [answers, setAnswers] = useState({});
 
+  const readingTimer = useRef(null);
+
   const formatTime = (sec) => {
     const m = String(Math.floor(sec / 60)).padStart(2, "0");
     const s = String(sec % 60).padStart(2, "0");
@@ -31,15 +34,13 @@ const ArtikelQuizLiterasi = ({ dataArtikel }) => {
 
   // Simpan waktu baca ke cookie, hanya jika kuis belum selesai
   useEffect(() => {
-    if (dataNilai) return; // Jangan set timer jika sudah ada nilai
+    if (dataNilai) return;
 
-    let timer;
     if (timeLeft > 0 && !readingDone) {
-      timer = setInterval(() => {
+      readingTimer.current = setInterval(() => {
         setTimeLeft((prev) => {
           const newTime = prev - 1;
 
-          // Simpan ke cookies
           setCookie("reading_timer", newTime.toString(), {
             maxAge: 60 * 60 * 24,
           });
@@ -54,7 +55,7 @@ const ArtikelQuizLiterasi = ({ dataArtikel }) => {
       setReadingDone(true);
     }
 
-    return () => clearInterval(timer);
+    return () => clearInterval(readingTimer.current);
   }, [timeLeft, readingDone, dataNilai, id_artikel]);
 
   const handleOptionChange = (soalId, selected) => {
@@ -72,10 +73,20 @@ const ArtikelQuizLiterasi = ({ dataArtikel }) => {
       );
 
       if (uploadNilaiLiterasi.fulfilled.match(res)) {
-        toast.success("Nilai telah direkap");
-        deleteCookie("reading_timer");
-        deleteCookie("reading_artikel_id");
-        navigate("/");
+        setQuizSubmitted(true); // ✅ Sembunyikan seluruh tampilan
+
+        Swal.fire({
+          title: "Sukses",
+          text: "Berhasil menyelesaikan kuis.",
+          icon: "success",
+          confirmButtonText: "Kembali Ke Menu Utama",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            deleteCookie("reading_timer");
+            deleteCookie("reading_artikel_id");
+            navigate("/");
+          }
+        });
       } else {
         toast.error("Nilai gagal diupload");
       }
@@ -123,22 +134,23 @@ const ArtikelQuizLiterasi = ({ dataArtikel }) => {
 
   // quiz time
   const [quizTimeLeft, setQuizTimeLeft] = useState(15 * 60); // 15 menit untuk kuis
+  const quizTimer = useRef(null); // untuk mengontrol timer kuis
 
   useEffect(() => {
     if (!startQuiz || dataNilai) return;
 
-    const timer = setInterval(() => {
+    quizTimer.current = setInterval(() => {
       setQuizTimeLeft((prev) => {
         if (prev <= 1) {
-          clearInterval(timer);
-          handleUploadNilaiQuiz(); // auto submit jika waktu habis
+          clearInterval(quizTimer.current);
+          handleUploadNilaiQuiz(); // Auto-submit jika waktu habis
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => clearInterval(quizTimer.current);
   }, [startQuiz, dataNilai]);
 
   return (
@@ -163,9 +175,12 @@ const ArtikelQuizLiterasi = ({ dataArtikel }) => {
             <div className="mt-4 flex justify-end">
               <button
                 className="btn btn-primary"
-                onClick={() => setStartQuiz(true)}
+                onClick={() => {
+                  clearInterval(readingTimer.current);
+                  setStartQuiz(true);
+                }}
               >
-                Mulai Quiz
+                Mulai Kuis
               </button>
             </div>
           </div>

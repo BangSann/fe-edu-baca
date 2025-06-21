@@ -52,7 +52,7 @@ const MainPage = () => {
             </button>
           </section>
           <section className="items-center justify-center hidden md:flex ">
-            <img src="eduBanner.png" alt="edubanner" />
+            <img src="/edu_baca_banner_2.jpg" alt="edubanner"  className="rounded-xl"/>
           </section>
         </section>
         <section className="w-full  justify-center bg-white py-12 flex p-4">

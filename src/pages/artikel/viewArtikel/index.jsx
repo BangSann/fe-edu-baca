@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import MainLayout from "../../layout";
 import { useDispatch, useSelector } from "react-redux";
 import { getArtikelById } from "../../../lib/redux/slice/artikelAdminSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ArtikelQuizLiterasi from "./artikelQuizLiterasi";
 import { getCookies } from "cookies-next";
 import ArtikelDebat from "./debatArtikel";
@@ -10,6 +10,7 @@ import { getNilaiLiterasiByIdUsersIdArtikel } from "../../../lib/redux/slice/nil
 
 const ViewArtikelUsersPage = () => {
   const { id_artikel } = useParams();
+  const [quizSubmitted, setQuizSubmitted] = useState(false);
   // data state
   const dispatch = useDispatch();
   const { data: dataArtikel, isLoading } = useSelector(
@@ -47,19 +48,26 @@ const ViewArtikelUsersPage = () => {
 
   return (
     <MainLayout>
-      {isLoading || loadingNilai ? (
-        <section className=" flex justify-center p-4">
-          <div className="skeleton h-32 w-full container mt-3"></div>
-        </section>
-      ) : (
-        <section>
-          {dataArtikel?.[0]?.type == "quiz" ? (
-            <ArtikelQuizLiterasi dataArtikel={dataArtikel[0]} />
-          ) : (
-            <ArtikelDebat dataArtikel={dataArtikel[0]} />
-          )}
-        </section>
-      )}
+      <section className="mx-auto h-[95vh]">
+        {isLoading || loadingNilai ? (
+          <section className=" flex justify-center p-4">
+            <div className="skeleton h-32 w-full container mt-3"></div>
+          </section>
+        ) : quizSubmitted ? (
+          <section></section>
+        ) : (
+          <section>
+            {dataArtikel?.[0]?.type == "quiz" ? (
+              <ArtikelQuizLiterasi
+                dataArtikel={dataArtikel[0]}
+                setQuizSubmitted={(e) => setQuizSubmitted(e)}
+              />
+            ) : (
+              <ArtikelDebat dataArtikel={dataArtikel[0]} />
+            )}
+          </section>
+        )}
+      </section>
     </MainLayout>
   );
 };

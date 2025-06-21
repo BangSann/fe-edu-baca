@@ -56,7 +56,7 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="flex gap-1 items-center">
-            <img src="/logo_unp.png" alt="Logo" className="w-12 h-auto" />
+            <img src="/logo_kementrian.png" alt="Logo" className="w-12 h-auto" />
             <Link
               to="/"
               className="font-bold text-xl btn btn-ghost normal-case text-white text-start p-0"
