@@ -88,8 +88,8 @@ const EditArtikelPage = () => {
                   <dialog dialog id="my_modal_artikel" className={`modal`}>
                     <div className="modal-box space-y-3">
                       <InputField
-                        placeholder={"Link Artikel"}
-                        label={"Artikel Link"}
+                        placeholder={"Tautan Artikel"}
+                        label={"Tautan Artikel"}
                         error={errors.artikel_link}
                         name={"artikel_link"}
                         onchange={handleChange}
@@ -118,7 +118,7 @@ const EditArtikelPage = () => {
                       }}
                     >
                       <BiPencil size={24} />
-                      Ubah Link Artikel
+                      Ubah Tautan Artikel
                     </button>
                     {errors.artikel_link && (
                       <TextError>{errors.artikel_link}</TextError>
@@ -175,7 +175,7 @@ const EditArtikelPage = () => {
                     type={"text"}
                   />
                   <div className="flex flex-col space-y-1">
-                    <label htmlFor="">Type</label>
+                    <label htmlFor="">Tipe</label>
                     <select
                       className={`select select-md w-full ${
                         errors.type && "outline outline-red-500"

@@ -10,7 +10,7 @@ const Footer = () => {
             EduBaca
           </h2>
           <p className="text-sm text-center md:text-start">
-            Platform edukasi dan dongeng nusantara untuk anak-anak Indonesia.
+            Media edukasi untuk membantu meningkatkan kemampuan literasi dan berpikir kritis anak Indonesia.
           </p>
           <div className="flex w-full gap-2 justify-center md:justify-start mt-3">
             <span className=""> <img src="/logo_kementrian.png" className="h-12" /></span>
@@ -38,7 +38,7 @@ const Footer = () => {
             </li>
             <li>
               <Link to={"/profile"} className="link link-hover">
-                Profile
+                Profil
               </Link>
             </li>
             <li>

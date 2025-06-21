@@ -37,7 +37,7 @@ const MainPage = () => {
           <section className="space-y-8 flex flex-col justify-center">
             <div className="space-y-3">
               <h1 className="font-bold text-4xl">
-                Selamat Datang di EduBaca !
+                Selamat Datang di EduBaca!
               </h1>
               <p>
                 Tingkatkan kemampuan membaca kritis dan pemahaman bacaanmu lewat

@@ -97,7 +97,7 @@ const AddArtikelPage = () => {
                     }}
                   >
                     <BiPencil size={24} />
-                    Tambah Link Artikel
+                    Tambah Tautan Artikel
                   </button>
                   {errors.artikel_link && (
                     <TextError>{errors.artikel_link}</TextError>
@@ -141,7 +141,7 @@ const AddArtikelPage = () => {
                   type={"text"}
                 />
                 <div className="flex flex-col space-y-1">
-                  <label htmlFor="">Type</label>
+                  <label htmlFor="">Tipe</label>
                   <select
                     className={`select select-md w-full ${
                       errors.type && "outline outline-red-500"
@@ -151,7 +151,7 @@ const AddArtikelPage = () => {
                     value={values.type}
                   >
                     <option value="">Pilih fungsi artikel</option>
-                    <option value="quiz">Quiz</option>
+                    <option value="quiz">Kuis</option>
                     <option value="debat">Debat</option>
                   </select>
                   {errors.type && <TextError>{errors.type}</TextError>}

@@ -42,7 +42,7 @@ const LoginPage = () => {
 
         const response = await dispatch(getUserProfile());
         if (getUserProfile.fulfilled.match(response)) {
-          toast.success("Berhasil login");
+          toast.success("Berhasil Masuk!");
           if (response.payload.data.role.toLowerCase() == "siswa") {
             navigate("/");
           }
@@ -51,7 +51,7 @@ const LoginPage = () => {
           }
         }
       } else {
-        toast.error("username atau password salah");
+        toast.error("username atau Kata sandi salah");
       }
     } catch (error) {
       console.log(error);
@@ -96,7 +96,7 @@ const LoginPage = () => {
                   <input
                     className="input input-xl  bg-white w-full"
                     type="text"
-                    placeholder="username"
+                    placeholder="Nama Pengguna"
                     name="EmailOrUsername"
                     value={values.EmailOrUsername}
                     onChange={handleChange}
@@ -111,7 +111,7 @@ const LoginPage = () => {
                   <input
                     className="input input-xl bg-white w-full"
                     type="password"
-                    placeholder="password"
+                    placeholder="Kata Sandi"
                     name="password"
                     value={values.password}
                     onChange={handleChange}

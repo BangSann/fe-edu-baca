@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const menuGuest = [
   { title: "Beranda", route: "/" },
   { title: "Bacaan", route: "/artikel" },
-  { title: "Project Literasi", route: "/artikel?type=quiz" },
+  { title: "Proyek Literasi", route: "/artikel?type=quiz" },
   { title: "Kontak", route: "/contact" },
   { title: "Masuk", route: "/login" },
 ];
@@ -12,9 +12,9 @@ const menuGuest = [
 const menuLoggedIn = [
   { title: "Beranda", route: "/" },
   { title: "Bacaan", route: "/artikel" },
-  { title: "Project Literasi", route: "/artikel?type=quiz" },
+  { title: "Proyek Literasi", route: "/artikel?type=quiz" },
   { title: "Kontak", route: "/contact" },
-  { title: "Profile", route: "/profile" },
+  { title: "profil", route: "/profile" },
 ];
 
 const Navbar = () => {
@@ -61,7 +61,7 @@ const Navbar = () => {
               to="/"
               className="font-bold text-xl btn btn-ghost normal-case text-white text-start p-0"
             >
-              Edu Baca
+              EduBaca
             </Link>
           </div>
         </div>

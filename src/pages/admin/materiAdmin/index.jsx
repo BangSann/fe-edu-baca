@@ -101,7 +101,7 @@ const MateriAdminPage = () => {
                       <th className="w-12">No</th>
                       <th>Cover</th>
                       <th>Judul</th>
-                      <th className="w-44">Action</th>
+                      <th className="w-44">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>

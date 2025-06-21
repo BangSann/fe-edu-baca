@@ -79,7 +79,7 @@ const ArtikelPage = () => {
                     className="btn btn-outline rounded-s-none bg-slate-500 text-white border-2 border-slate-500"
                     onClick={() => setSearchParams("")}
                   >
-                    Clear
+                    Bersihkan
                   </button>
                 </section>
                 {currentDatas?.length <= 0 ? (

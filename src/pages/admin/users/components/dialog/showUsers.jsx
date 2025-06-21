@@ -7,12 +7,8 @@ const ShowUsers = ({ onClose, selectedData }) => {
           <p className="text-end bg-gray-100 p-2">{selectedData.name}</p>
         </div>
         <div className="grid grid-cols-2">
-          <p className="p-2">Username</p>
+          <p className="p-2">Nama Belakang</p>
           <p className="text-end bg-gray-100 p-2">{selectedData?.username}</p>
-        </div>
-        <div className="grid grid-cols-2">
-          <p className="p-2">Password</p>
-          <p className="text-end bg-gray-100 p-2">{selectedData?.password || "undefined"}</p>
         </div>
         <div className="grid grid-cols-2">
           <p className="p-2">Sekolah</p>

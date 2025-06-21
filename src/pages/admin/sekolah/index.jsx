@@ -66,7 +66,7 @@ const SekolahAdminPage = () => {
             <GrFormPrevious />
           </Link>
           <input
-            placeholder="search"
+            placeholder="cari"
             className="input rounded-none"
             value={searchParams}
             onChange={(e) => setSearchParams(e.target.value)}
@@ -75,7 +75,7 @@ const SekolahAdminPage = () => {
             className="btn btn-outline rounded-s-none"
             onClick={() => setSearchParams("")}
           >
-            Clear
+            Bersihkan
           </button>
         </div>
         <button
@@ -107,7 +107,7 @@ const SekolahAdminPage = () => {
                   <th className="w-12">No</th>
                   <th>Nama Sekolah</th>
                   <th>Jumlah Kelas</th>
-                  <th className="w-44">Action</th>
+                  <th className="w-44">Aksi</th>
                 </tr>
               </thead>
               <tbody>

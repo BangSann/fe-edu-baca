@@ -59,11 +59,11 @@ const ArtikelAdminPage = () => {
       <div className="flex justify-between">
         <div className="flex items-center w-2/5">
           <input
-            placeholder="search"
+            placeholder="Cari"
             className="input rounded-e-none"
             onChange={(e) => setSearchParams(e.target.value)}
           />
-          <button className="btn btn-outline rounded-s-none">Clear</button>
+          <button className="btn btn-outline rounded-s-none">Bersihkan</button>
         </div>
         <button
           className="btn btn-secondary text-lg"
@@ -84,10 +84,10 @@ const ArtikelAdminPage = () => {
                 <tr>
                   <th className="w-12">No</th>
                   <th>Artikel</th>
-                  <th>Link</th>
-                  <th>Type</th>
+                  <th>Tautan</th>
+                  <th>Tipe</th>
                   <th>Total Soal</th>
-                  <th className="w-44">Action</th>
+                  <th className="w-44">Aksi</th>
                 </tr>
               </thead>
               <tbody>

@@ -62,16 +62,16 @@ const EditUsers = ({ onClose, selectedData }) => {
               <InputField
                 label={"Nama"}
                 name={"name"}
-                placeholder={"Name"}
+                placeholder={"nama"}
                 type={"text"}
                 error={errors.name}
                 onchange={handleChange}
                 values={values.name}
               />
               <InputField
-                label={"Username"}
+                label={"Nama Belakang"}
                 name={"username"}
-                placeholder={"Username"}
+                placeholder={"Nama Belakang"}
                 type={"text"}
                 error={errors.username}
                 onchange={handleChange}
@@ -87,18 +87,18 @@ const EditUsers = ({ onClose, selectedData }) => {
                 values={values.email}
               />
               <InputField
-                label={"Password Baru"}
+                label={"Kata sandi baru"}
                 name={"password"}
-                placeholder={"Password"}
+                placeholder={"Kata sandi baru"}
                 type={"password"}
                 error={errors.password}
                 onchange={handleChange}
                 values={values.password}
               />
               <InputField
-                label={"Konfirmasi Password"}
+                label={"Konfirmasi kata sandi"}
                 name={"password_confirmation"}
-                placeholder={"Konfirmasi Password"}
+                placeholder={"Konfirmasi kata sandi"}
                 type={"password"}
                 error={errors.password_confirmation}
                 onchange={handleChange}

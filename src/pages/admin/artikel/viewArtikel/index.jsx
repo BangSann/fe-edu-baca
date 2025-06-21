@@ -64,7 +64,7 @@ const ViewArtikelPage = () => {
                 </p>
               </div>
               <div className="grid grid-cols-3 items-center">
-                <p className="col-span-1 p-2">Type</p>
+                <p className="col-span-1 p-2">Tipe</p>
                 <p className="col-span-2 p-2 bg-slate-100">
                   {dataArtikel[0]?.type}
                 </p>

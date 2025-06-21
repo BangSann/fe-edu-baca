@@ -67,9 +67,9 @@ const AddUsers = ({ onClose }) => {
                 values={values.name}
               />
               <InputField
-                label={"Username"}
+                label={"Nama Belakang"}
                 name={"username"}
-                placeholder={"username"}
+                placeholder={"Nama Belakang"}
                 type={"text"}
                 error={errors.username}
                 onchange={handleChange}
@@ -85,18 +85,18 @@ const AddUsers = ({ onClose }) => {
                 values={values.email}
               />
               <InputField
-                label={"Password"}
+                label={"kata sandi"}
                 name={"password"}
-                placeholder={"password"}
+                placeholder={"kata sandi"}
                 type={"password"}
                 error={errors.password}
                 onchange={handleChange}
                 values={values.password}
               />
               <InputField
-                label={"Password Confirmation"}
+                label={"Konfirmasi Kata Sandi"}
                 name={"password_confirmation"}
-                placeholder={"password confirmation"}
+                placeholder={"Konfirmasi kata sandi"}
                 type={"password"}
                 error={errors.password_confirmation}
                 onchange={handleChange}

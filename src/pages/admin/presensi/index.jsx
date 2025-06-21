@@ -116,7 +116,7 @@ const PresensiAdminPage = () => {
                   <th>Kelas</th>
                   <th>Jumlah Siswa</th>
 
-                  <th className="w-44">Action</th>
+                  <th className="w-44">Aksi</th>
                 </tr>
               </thead>
               <tbody>

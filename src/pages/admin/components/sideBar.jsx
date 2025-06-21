@@ -13,7 +13,7 @@ const navItems = [
     path: "",
   },
   {
-    title: "Users",
+    title: "Pengguna",
     icon: <BsFilePerson size={24} />,
     path: "users",
   },
