@@ -10,13 +10,26 @@ const Footer = () => {
             EduBaca
           </h2>
           <p className="text-sm text-center md:text-start">
-            Media edukasi untuk membantu meningkatkan kemampuan literasi dan berpikir kritis anak Indonesia.
+            Media edukasi untuk membantu meningkatkan kemampuan literasi dan
+            berpikir kritis anak Indonesia.
           </p>
           <div className="flex w-full gap-2 justify-center md:justify-start mt-3">
-            <span className=""> <img src="/logo_kementrian.png" className="h-12" /></span>
-            <span className=""> <img src="/DPPM.png" className="h-12" /></span>
-            <span className=""> <img src="/logo_unp.png" className="h-12" /></span>
-            <span className=""> <img src="/garuda.png" className="h-12" /></span>
+            <span className="">
+              {" "}
+              <img src="/logo_kementrian.png" className="h-12" />
+            </span>
+            <span className="">
+              {" "}
+              <img src="/DPPM.png" className="h-12" />
+            </span>
+            <span className="">
+              {" "}
+              <img src="/logo_unp.png" className="h-12" />
+            </span>
+            <span className="">
+              {" "}
+              <img src="/garuda.png" className="h-12" />
+            </span>
           </div>
         </div>
 
@@ -56,17 +69,28 @@ const Footer = () => {
           </h1>
           <ul className="menu md:p-0 px-4">
             <li>
-              <Link to={""} className="link link-hover">
+              <Link
+                to={"https://www.facebook.com/profile.php?id=61577723757851"}
+                className="link link-hover"
+              >
                 Facebook
               </Link>
             </li>
             <li>
-              <Link to={""} className="link link-hover">
+              <Link
+                to={
+                  "https://www.instagram.com/edubaca.unpkdr?igsh=N3FvbXprNWg1aTds"
+                }
+                className="link link-hover"
+              >
                 Instagram
               </Link>
             </li>
             <li>
-              <Link to={""} className="link link-hover">
+              <Link
+                to={"https://www.youtube.com/channel/UCuFvZk9qrFSdxxwk6GYBK3Q"}
+                className="link link-hover"
+              >
                 Youtube
               </Link>
             </li>

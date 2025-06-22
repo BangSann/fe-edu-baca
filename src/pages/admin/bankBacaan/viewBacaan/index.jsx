@@ -18,7 +18,6 @@ const ViewBacaanAdminPage = () => {
     handleGetBacaan();
   }, []);
   // redux state
-  console.log(dataBacaan);
 
   const [pdfLoaded, setPdfLoaded] = useState(false);
 
@@ -41,7 +40,7 @@ const ViewBacaanAdminPage = () => {
                 <GrFormPrevious />
               </Link>
               <h1 className="input input-neutral rounded-s-none w-full bg-gray-300">
-                {"Judul Tidak Tersedia"}
+                {dataBacaan?.[0]?.judul || "Judul Tidak Tersedia"}
               </h1>
             </section>
             <div className="w-full h-[80vh] overflow-hidden">
@@ -53,7 +52,9 @@ const ViewBacaanAdminPage = () => {
                 )}
                 {true ? (
                   <iframe
-                    src={`/dummy_materi.pdf`}
+                    src={`${import.meta.env.VITE_API_PDF_BACAAN_DEV}/${
+                      dataBacaan[0]?.pdf
+                    }`}
                     className="w-full h-full"
                     onLoad={handleLoad}
                     onError={handleError}

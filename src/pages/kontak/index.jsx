@@ -21,7 +21,7 @@ const KontakPage = () => {
             </h2>
             <div className="flex justify-center gap-6 text-3xl text-green-600">
               <a
-                href="https://instagram.com/edubaca"
+                href="https://www.instagram.com/edubaca.unpkdr?igsh=N3FvbXprNWg1aTds"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Instagram"
@@ -29,7 +29,7 @@ const KontakPage = () => {
                 <FaInstagram className="hover:text-pink-600 transition" />
               </a>
               <a
-                href="https://youtube.com/@edubaca"
+                href="https://www.youtube.com/channel/UCuFvZk9qrFSdxxwk6GYBK3Q"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="YouTube"
@@ -37,7 +37,7 @@ const KontakPage = () => {
                 <FaYoutube className="hover:text-red-600 transition" />
               </a>
               <a
-                href="https://facebook.com/edubaca"
+                href="https://www.facebook.com/profile.php?id=61577723757851"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Facebook"

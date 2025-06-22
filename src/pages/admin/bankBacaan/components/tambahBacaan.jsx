@@ -38,8 +38,6 @@ const TambahBacaan = ({ onClose }) => {
   const handleAddBacaan = async (values) => {
     try {
       const res = await dispatch(addBacaan(values));
-      console.log(res);
-
       if (addBacaan.fulfilled.match(res)) {
         toast.success("Berhasil menambahkan bacaan");
         onClose();

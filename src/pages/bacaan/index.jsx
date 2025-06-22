@@ -3,6 +3,7 @@ import MainLayout from "../layout";
 import { getBacaan } from "../../lib/redux/slice/bacaanSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../admin/components/pagination";
+import { Link } from "react-router-dom";
 
 const BacaanUserPage = () => {
   // redux state
@@ -76,7 +77,9 @@ const BacaanUserPage = () => {
                 >
                   <img
                     src={
-                      import.meta.env.VITE_API_IMAGE_MATERI_DEV + item?.cover
+                      import.meta.env.VITE_API_IMAGE_BACAAN_DEV +
+                      "/" +
+                      item?.cover
                     }
                     alt={item.judul}
                     className="w-full h-48 object-contain"
@@ -84,7 +87,7 @@ const BacaanUserPage = () => {
                   <div className="p-4">
                     <h3 className="text-lg font-semibold mb-2">{item.judul}</h3>
                     <Link
-                      to={`/materi/${item?.id}`}
+                      to={`/bacaan/${item?.id}`}
                       className="inline-block text-sm text-blue-600 hover:underline"
                     >
                       Lihat Materi PDF

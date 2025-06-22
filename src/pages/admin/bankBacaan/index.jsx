@@ -21,7 +21,6 @@ const BankBacaanAmdinPage = () => {
     handleGetBacaan();
   }, []);
   // redux state
-  console.log(dataBacaan);
 
   // filter state
   const [searchParams, setSearchParams] = useState("");
@@ -47,7 +46,7 @@ const BankBacaanAmdinPage = () => {
   // dialog state
   return (
     <AdminLayout>
-      <section className="flex justify-between">
+      <section className="flex justify-between space-y-3">
         <div className="flex w-2/5">
           <input
             type="search"
@@ -75,14 +74,14 @@ const BankBacaanAmdinPage = () => {
       {isLoading ? (
         <section className="skeleton w-full h-32"></section>
       ) : currentDatas?.length <= 0 ? (
-        <div className="mt-3 flex flex-col items-center justify-center h-40 text-center p-4 border rounded-md">
+        <div className="flex flex-col items-center justify-center h-40 text-center p-4 border rounded-md">
           <p className="text-xl font-bold text-red-500 mb-4">
             Bacaan Tidak Ditemukan
           </p>
         </div>
       ) : (
         <section>
-          <section className="mt-3">
+          <section className="">
             <div className="overflow-x-auto">
               <table className="table table-zebra border-gray-400">
                 {/* head */}
@@ -97,16 +96,21 @@ const BankBacaanAmdinPage = () => {
                 <tbody>
                   {currentDatas?.map((item, i) => (
                     <tr key={i}>
-                      <td>1</td>
+                      <td>{i+1}</td>
                       <td>
-                        <img className="w-24" src={"/eduBanner.png"} />
+                        <img
+                          className="w-24 h-24 object-cover"
+                          src={`${import.meta.env.VITE_API_IMAGE_BACAAN_DEV}/${
+                            item?.cover
+                          }`}
+                        />
                       </td>
-                      <td>Bacaan 1</td>
+                      <td>{item?.judul || ""}</td>
                       <td className="space-x-1">
                         <button
                           className="btn btn-sm btn-primary text-white"
                           onClick={() => {
-                            navigate(`/eduadmin/bacaan/${1}`);
+                            navigate(`/eduadmin/bacaan/${item?.id}`);
                           }}
                         >
                           <BsEye size={18} />
