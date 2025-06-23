@@ -52,9 +52,9 @@ function App() {
             <Route
               index
               element={
-                <ProtectedRoute>
+                <>
                   <ArtikelPage />
-                </ProtectedRoute>
+                </>
               }
             />
             <Route
