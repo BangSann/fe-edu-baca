@@ -19,11 +19,18 @@ const validationSchema = Yup.object().shape({
           "image/svg+xml",
         ].includes(value.type)
       );
+    })
+    .test("fileSize", "Ukuran file maksimal 2MB", (value) => {
+      return value && value.size <= 2 * 1024 * 1024; //
+      // Maksimal 2MB
     }),
   pdf: Yup.mixed()
     .required("PDF wajib diunggah")
     .test("fileType", "File harus berupa PDF", (value) => {
       return value && value.type === "application/pdf";
+    })
+    .test("fileSize", "Ukuran file maksimal 10MB", (value) => {
+      return value && value.size <= 10 * 1024 * 1024; // Maksimal 10MB
     }),
 });
 
@@ -33,7 +40,7 @@ const AddModul = ({ onClose }) => {
   const { isLoading } = useSelector((state) => state.perangkatMateri);
   // redux state
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values , {resetForm}) => {
     try {
       const res = await dispatch(createPerangkatMateri(values));
       if (createPerangkatMateri.fulfilled.match(res)) {
@@ -44,6 +51,8 @@ const AddModul = ({ onClose }) => {
       }
     } catch (error) {
       alert("Terjadi kesalahan: " + error.message);
+    }finally{
+      resetForm();
     }
   };
   return (
@@ -53,11 +62,14 @@ const AddModul = ({ onClose }) => {
       enableReinitialize
       onSubmit={handleSubmit}
     >
-      {({ setFieldValue, isSubmitting }) => (
+      {({ setFieldValue, isSubmitting , resetForm }) => (
         <Form className="space-y-4">
           <div>
             <label className="block font-medium">Judul</label>
-            <Field name="judul" className="input input-neutral border p-2 w-full" />
+            <Field
+              name="judul"
+              className="input input-neutral border p-2 w-full"
+            />
             <ErrorMessage
               name="judul"
               component="div"
@@ -105,7 +117,10 @@ const AddModul = ({ onClose }) => {
             </button>
             <button
               type="button"
-              onClick={onClose}
+              onClick={()=>{
+                onClose();
+                resetForm();
+              }}
               className="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded"
               disabled={isLoading}
             >

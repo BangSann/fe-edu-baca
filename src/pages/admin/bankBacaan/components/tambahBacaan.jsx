@@ -12,22 +12,31 @@ const bacaanSchema = yup.object().shape({
     .mixed()
     .required("Cover wajib diunggah")
     .test("fileType", "Format harus berupa gambar", (value) => {
-      return (
-        value &&
-        [
-          "image/jpeg",
-          "image/png",
-          "image/jpg",
-          "image/gif",
-          "image/svg+xml",
-        ].includes(value.type)
-      );
+      if (!value) return false;
+      const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+        "image/gif",
+        "image/svg+xml",
+      ];
+      return allowedTypes.includes(value.type);
+    })
+    .test("fileSize", "Ukuran file maksimal 2MB", (value) => {
+      if (!value) return false;
+      return value.size <= 2 * 1024 * 1024; // 2MB
     }),
+
   pdf: yup
     .mixed()
     .required("PDF wajib diunggah")
     .test("fileType", "File harus berupa PDF", (value) => {
-      return value && value.type === "application/pdf";
+      if (!value) return false;
+      return value.type === "application/pdf";
+    })
+    .test("fileSize", "Ukuran file maksimal 10MB", (value) => {
+      if (!value) return false;
+      return value.size <= 10 * 1024 * 1024; // 10MB
     }),
 });
 
@@ -35,7 +44,7 @@ const TambahBacaan = ({ onClose }) => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.bacaan);
 
-  const handleAddBacaan = async (values) => {
+  const handleAddBacaan = async (values, { resetForm }) => {
     try {
       const res = await dispatch(addBacaan(values));
       if (addBacaan.fulfilled.match(res)) {
@@ -47,6 +56,8 @@ const TambahBacaan = ({ onClose }) => {
     } catch (error) {
       console.log(error);
       toast.error("Terjadi kesalahan saat mengunggah");
+    }finally {
+      resetForm();
     }
   };
 
@@ -57,10 +68,18 @@ const TambahBacaan = ({ onClose }) => {
         cover: null,
         pdf: null,
       }}
+      enableReinitialize
       validationSchema={bacaanSchema}
       onSubmit={handleAddBacaan}
     >
-      {({ errors, values, handleChange, setFieldValue, touched }) => (
+      {({
+        errors,
+        values,
+        handleChange,
+        setFieldValue,
+        touched,
+        resetForm,
+      }) => (
         <Form className="space-y-3">
           <InputField
             error={errors.judul}
@@ -113,7 +132,10 @@ const TambahBacaan = ({ onClose }) => {
             <button
               className="btn btn-outline"
               type="button"
-              onClick={onClose}
+              onClick={() => {
+                resetForm();
+                onClose();
+              }}
               disabled={isLoading}
             >
               Tutup
