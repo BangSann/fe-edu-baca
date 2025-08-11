@@ -69,7 +69,7 @@ const NilaiLiterasiPage = () => {
       index + 1,
       item.user?.name || "-",
       item.user?.username || "-",
-      item.user?.sekolah ? `SDN ${item.user.sekolah}` : "-",
+      item.user?.sekolah?.nama_sekolah ||'',
       item.user?.kelas || "-",
       item.nilai,
     ]);
