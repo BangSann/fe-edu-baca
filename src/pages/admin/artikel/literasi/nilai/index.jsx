@@ -20,7 +20,6 @@ const NilaiLiterasiPage = () => {
     (state) => state.nilaiLiterasi
   );
   // redux state
-
   async function handleGetNilaiByIdArtikel() {
     try {
       const res = await dispatch(getnilaiLiterasiByIdArtikel(id_artikel));
@@ -139,9 +138,7 @@ const NilaiLiterasiPage = () => {
                     <th>{i + 1}</th>
                     <td>{item.user?.name || "-"}</td>
                     <td>{item.user?.username || "-"}</td>
-                    <td>
-                      {item.user?.sekolah ? `SDN ${item.user.sekolah}` : "-"}
-                    </td>
+                    <td>{item.user?.sekolah?.nama_sekolah || ""}</td>
                     <td>{item.user?.kelas || "-"}</td>
                     <td>{item.nilai}</td>
                     <td className="space-x-1">
